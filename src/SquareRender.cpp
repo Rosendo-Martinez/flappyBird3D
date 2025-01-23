@@ -34,8 +34,11 @@ SquareRender::SquareRender()
  * 
  * Assumes some shader program is being used.
  */
-void SquareRender::draw()
+void SquareRender::draw(glm::vec3 color, unsigned int shaderID)
 {
+    // set color
+    glUniform3fv(glGetUniformLocation(shaderID, "color"), 1, &color[0]);
+
     // Draw square
     glBindVertexArray(this->VAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);

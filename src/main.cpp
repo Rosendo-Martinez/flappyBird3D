@@ -46,7 +46,7 @@ int main()
 
         // draw here
         testShader.use();
-        testRender.draw();
+        testRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), testShader.ID);
  
         glfwSwapBuffers(window);
         glfwPollEvents();

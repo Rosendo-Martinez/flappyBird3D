@@ -1,3 +1,5 @@
+#include <glm/vec3.hpp>
+
 class SquareRender
 {
 private:
@@ -6,5 +8,5 @@ private:
 public:
     SquareRender();
 
-    void draw();
+    void draw(glm::vec3 color, unsigned int shaderID);
 };
