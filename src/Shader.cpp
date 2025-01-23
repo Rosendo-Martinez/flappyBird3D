@@ -29,11 +29,15 @@ std::string readFile(const char* path)
     return ss.str();
 }
 
-
 Shader::Shader() : ID(0)
 {
 }
 
+/**
+ * Compiles and links shader program.
+ * 
+ * Logs errors.
+ */
 void Shader::compile(const char* vsPath, const char* fsPath)
 {
     std::string strVertexShader = readFile(vsPath);

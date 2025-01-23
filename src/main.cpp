@@ -9,8 +9,6 @@ const unsigned int SCREEN_HEIGHT = 900;
 
 void setUpTestTriangleToRender();
 
-Shader test;
-
 int main()
 {
     // configure glfw
@@ -58,8 +56,8 @@ int main()
 
 void setUpTestTriangleToRender()
 {
+    Shader test;
     test.compile("./shaders/testTriangle.vs", "./shaders/testTriangle.fs");
-
     glUseProgram(test.ID);
 
     // set up vertex data, buffers, and configure vertex attributes
