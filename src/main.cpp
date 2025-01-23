@@ -44,7 +44,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw here
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
  
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -62,18 +62,22 @@ void setUpTestTriangleToRender()
 
     // set up vertex data, buffers, and configure vertex attributes
 
+    // square
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f, // left  
-         0.5f, -0.5f, 0.0f, // right 
-         0.0f,  0.5f, 0.0f  // top   
-    }; 
+        -0.5f,  0.5f, 0.0f, // triangle 1
+        -0.5f, -0.5f, 0.0f,
+         0.5f,  0.5f, 0.0f,
+
+         0.5f, -0.5f, 0.0f, // triangle 2
+         0.5f,  0.5f, 0.0f,
+        -0.5f, -0.5f, 0.0f
+    };
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
-    // bind VAO
-    glBindVertexArray(VAO);
 
+    glBindVertexArray(VAO); // bind vao
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
