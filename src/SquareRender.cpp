@@ -1,0 +1,45 @@
+#include "SquareRender.h"
+
+#include <glad/glad.h>
+
+SquareRender::SquareRender()
+{
+    // square
+    float vertices[] = {
+        -0.5f,  0.5f, 0.0f, // triangle 1
+        -0.5f, -0.5f, 0.0f,
+         0.5f,  0.5f, 0.0f,
+
+         0.5f, -0.5f, 0.0f, // triangle 2
+         0.5f,  0.5f, 0.0f,
+        -0.5f, -0.5f, 0.0f
+    };
+
+    unsigned int VBO, VAO;
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+
+    glBindVertexArray(VAO); // bind vao
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    this->VAO = VAO;
+}
+
+/**
+ * Draws the square.
+ * 
+ * Assumes some shader program is being used.
+ */
+void SquareRender::draw()
+{
+    // Draw square
+    glBindVertexArray(this->VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    // unbind vao
+    glBindVertexArray(0);
+}

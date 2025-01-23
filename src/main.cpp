@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Shader.h"
+#include "SquareRender.h"
 
 const unsigned int SCREEN_WIDTH = 1600;
 const unsigned int SCREEN_HEIGHT = 900;
@@ -36,6 +37,7 @@ int main()
 
     // test triangle set up
     setUpTestTriangleToRender();
+    SquareRender testRender;
 
     // main loop
     while (!glfwWindowShouldClose(window))
@@ -44,7 +46,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw here
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        testRender.draw();
  
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -61,26 +63,4 @@ void setUpTestTriangleToRender()
     glUseProgram(test.ID);
 
     // set up vertex data, buffers, and configure vertex attributes
-
-    // square
-    float vertices[] = {
-        -0.5f,  0.5f, 0.0f, // triangle 1
-        -0.5f, -0.5f, 0.0f,
-         0.5f,  0.5f, 0.0f,
-
-         0.5f, -0.5f, 0.0f, // triangle 2
-         0.5f,  0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f
-    };
-
-    unsigned int VBO, VAO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-
-    glBindVertexArray(VAO); // bind vao
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
 }
