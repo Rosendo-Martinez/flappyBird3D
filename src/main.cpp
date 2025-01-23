@@ -35,7 +35,7 @@ int main()
 
     // set up for rendering square
     Shader testShader;
-    testShader.compile("./shaders/testTriangle.vs", "./shaders/testTriangle.fs");
+    testShader.compile("./shaders/square.vs", "./shaders/square.fs");
     SquareRender testRender;
 
     // main loop
