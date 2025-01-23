@@ -87,3 +87,8 @@ void Shader::compile(const char* vsPath, const char* fsPath)
 
     this->ID = shaderProgram;
 }
+
+void Shader::use()
+{
+    glUseProgram(this->ID);
+}

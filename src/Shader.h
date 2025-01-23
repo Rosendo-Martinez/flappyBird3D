@@ -5,4 +5,5 @@ public:
 
     Shader();
     void compile(const char* vsPath, const char* fsPath);
+    void use();
 };

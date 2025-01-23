@@ -3,6 +3,9 @@ all : ./bin/main.exe
 run : ./bin/main.exe
 	./bin/main.exe
 
+clean : 
+	rm -f ./bin/*.o ./bin/main.exe
+
 ./bin/main.exe : ./src/main.cpp ./bin/Shader.o ./bin/SquareRender.o
 	g++ ./src/main.cpp ./dep/glad/src/glad.c ./bin/Shader.o ./bin/SquareRender.o -o ./bin/main.exe -I./dep/glad/include -lglfw -ldl
 
