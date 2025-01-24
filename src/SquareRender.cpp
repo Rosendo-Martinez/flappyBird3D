@@ -37,6 +37,8 @@ SquareRender::SquareRender(Shader shader)
  */
 void SquareRender::draw(glm::vec3 color)
 {
+    this->shader.use();
+
     // set color
     glUniform3fv(glGetUniformLocation(this->shader.ID, "color"), 1, &color[0]);
 
@@ -44,6 +46,7 @@ void SquareRender::draw(glm::vec3 color)
     glBindVertexArray(this->VAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
-    // unbind vao
+    // unbind
     glBindVertexArray(0);
+    glUseProgram(0);
 }

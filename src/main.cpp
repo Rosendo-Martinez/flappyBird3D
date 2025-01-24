@@ -45,7 +45,6 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw here
-        testShader.use();
         testRender.draw(glm::vec3(1.0f, 1.0f, 1.0f));
  
         glfwSwapBuffers(window);
