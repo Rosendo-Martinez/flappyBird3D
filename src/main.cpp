@@ -48,7 +48,7 @@ int main()
     glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
     glm::mat4 view = glm::mat4(1.0f);
-    view = glm::translate(view, glm::vec3(0.f, 0.f, -1.5f));
+    view = glm::translate(view, glm::vec3(0.f, 0.f, -10.f));
     glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
     // main loop
@@ -58,7 +58,8 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw here
-        testRender.draw(glm::vec3(1.0f, 1.0f, 1.0f));
+        testRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(-5.0f, -0.f, -5.f));
+        testRender.draw(glm::vec3(1.0f, 0.0f, 0.1f), glm::vec3(0.f, 5.f, -5.f));
  
         glfwSwapBuffers(window);
         glfwPollEvents();

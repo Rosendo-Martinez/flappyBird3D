@@ -14,5 +14,5 @@ private:
 public:
     SquareRender(Shader shader);
 
-    void draw(glm::vec3 color);
+    void draw(glm::vec3 color, glm::vec3 pos);
 };
