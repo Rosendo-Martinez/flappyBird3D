@@ -4,6 +4,7 @@
 
 #include "Shader.h"
 #include "SquareRender.h"
+#include "Camera.h"
 
 #include <glm/mat4x4.hpp> 
 #include <glm/ext/matrix_clip_space.hpp> 
@@ -41,14 +42,15 @@ int main()
     Shader testShader;
     testShader.compile("./shaders/square.vs", "./shaders/square.fs");
     SquareRender testRender(testShader);
+    Camera cam;
+    cam.position = glm::vec3(0.0f, 0.0f, 10.f);
 
     testShader.use();
 
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
     glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-    glm::mat4 view = glm::mat4(1.0f);
-    view = glm::translate(view, glm::vec3(0.f, 0.f, -10.f));
+    glm::mat4 view = cam.getViewMatrix();
     glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
     // main loop
