@@ -16,7 +16,7 @@ const unsigned int SCREEN_HEIGHT = 900;
 
 Camera cam;
 float yaw = -90.0f;
-float pitch = -20.0f;
+float pitch = 0.0f;
 
 void processInput(GLFWwindow* window);
 
@@ -86,18 +86,44 @@ void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     {
-        cam.position.z -= 0.1f;
+        cam.position += cam.facingDir * 0.1f;
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
     {
-        cam.position.z += 0.1f;
+        cam.position -= cam.facingDir * 0.1f;
     }
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {
-        cam.position.x -= 0.1f;
+        cam.position -= glm::normalize(glm::cross(cam.facingDir, cam.up)) * 0.1f;
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
     {
-        cam.position.x += 0.1f;
+        cam.position += glm::normalize(glm::cross(cam.facingDir, cam.up)) * 0.1f;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+    {
+        pitch += 0.2f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+    {
+        pitch -= 0.2f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+    {
+        yaw -= 0.2f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+    {
+        yaw += 0.2f;
+    }
+
+    if (pitch > 89.0f)
+    {
+        pitch = 89.0f;
+    }
+    else if (pitch < -89.0f)
+    {
+        pitch = -89.0f;
     }
 }
