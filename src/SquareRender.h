@@ -1,12 +1,14 @@
 #include <glm/vec3.hpp>
+#include "Shader.h"
 
 class SquareRender
 {
 private:
     unsigned int VAO;
+    Shader shader;
 
 public:
-    SquareRender();
+    SquareRender(Shader shader);
 
-    void draw(glm::vec3 color, unsigned int shaderID);
+    void draw(glm::vec3 color);
 };

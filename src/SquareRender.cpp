@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-SquareRender::SquareRender()
+SquareRender::SquareRender(Shader shader)
 {
     // square
     float vertices[] = {
@@ -27,6 +27,7 @@ SquareRender::SquareRender()
     glEnableVertexAttribArray(0);
 
     this->VAO = VAO;
+    this->shader = shader;
 }
 
 /**
@@ -34,10 +35,10 @@ SquareRender::SquareRender()
  * 
  * Assumes some shader program is being used.
  */
-void SquareRender::draw(glm::vec3 color, unsigned int shaderID)
+void SquareRender::draw(glm::vec3 color)
 {
     // set color
-    glUniform3fv(glGetUniformLocation(shaderID, "color"), 1, &color[0]);
+    glUniform3fv(glGetUniformLocation(this->shader.ID, "color"), 1, &color[0]);
 
     // Draw square
     glBindVertexArray(this->VAO);

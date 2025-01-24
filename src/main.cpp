@@ -36,7 +36,7 @@ int main()
     // set up for rendering square
     Shader testShader;
     testShader.compile("./shaders/square.vs", "./shaders/square.fs");
-    SquareRender testRender;
+    SquareRender testRender(testShader);
 
     // main loop
     while (!glfwWindowShouldClose(window))
@@ -46,7 +46,7 @@ int main()
 
         // draw here
         testShader.use();
-        testRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), testShader.ID);
+        testRender.draw(glm::vec3(1.0f, 1.0f, 1.0f));
  
         glfwSwapBuffers(window);
         glfwPollEvents();

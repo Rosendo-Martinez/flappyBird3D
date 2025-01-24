@@ -1,3 +1,6 @@
+#ifndef SHADER
+#define SHADER
+
 class Shader
 {
 public:
@@ -7,3 +10,5 @@ public:
     void compile(const char* vsPath, const char* fsPath);
     void use();
 };
+
+#endif
