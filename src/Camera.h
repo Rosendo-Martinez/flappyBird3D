@@ -14,6 +14,7 @@ class Camera
 {
 public:
     glm::vec3 position; // position of camera
+    glm::vec3 facingDir; // direction that camera is facing
 
     Camera();
     glm::mat4 getViewMatrix();

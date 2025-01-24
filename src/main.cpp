@@ -51,6 +51,7 @@ int main()
     testShader.use();
 
     cam.position = glm::vec3(0.0f, 0.0f, 10.f);
+    cam.facingDir = glm::vec3(0.0f, 0.0f, -1.0f);
 
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
     glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -60,6 +61,8 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
+
+        cam.facingDir.x = 0.5f * cos(glfwGetTime());
 
         // cam.position.x = 4 * sin(glfwGetTime());
         glm::mat4 view = cam.getViewMatrix();
