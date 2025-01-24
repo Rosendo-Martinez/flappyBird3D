@@ -14,6 +14,10 @@
 const unsigned int SCREEN_WIDTH = 1600;
 const unsigned int SCREEN_HEIGHT = 900;
 
+Camera cam;
+
+void processInput(GLFWwindow* window);
+
 int main()
 {
     // configure glfw
@@ -43,10 +47,10 @@ int main()
     Shader testShader;
     testShader.compile("./shaders/square.vs", "./shaders/square.fs");
     SquareRender testRender(testShader);
-    Camera cam;
-    cam.position = glm::vec3(0.0f, 0.0f, 10.f);
 
     testShader.use();
+
+    cam.position = glm::vec3(0.0f, 0.0f, 10.f);
 
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
     glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -55,7 +59,9 @@ int main()
     // main loop
     while (!glfwWindowShouldClose(window))
     {
-        cam.position.x = 4 * sin(glfwGetTime());
+        processInput(window);
+
+        // cam.position.x = 4 * sin(glfwGetTime());
         glm::mat4 view = cam.getViewMatrix();
         testShader.use();
         glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
@@ -73,4 +79,24 @@ int main()
 
     glfwTerminate();
     return 0;
+}
+
+void processInput(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    {
+        cam.position.z -= 0.1f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    {
+        cam.position.z += 0.1f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    {
+        cam.position.x -= 0.1f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    {
+        cam.position.x += 0.1f;
+    }
 }
