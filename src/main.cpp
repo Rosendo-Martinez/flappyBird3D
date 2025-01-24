@@ -17,6 +17,7 @@ const unsigned int SCREEN_HEIGHT = 900;
 Camera cam;
 float yaw = -90.0f;
 float pitch = 0.0f;
+float fov = 45.0f;
 
 void processInput(GLFWwindow* window);
 
@@ -53,9 +54,6 @@ int main()
 
     cam.position = glm::vec3(0.0f, 0.0f, 10.f);
 
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
-    glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
     // main loop
     while (!glfwWindowShouldClose(window))
     {
@@ -63,8 +61,10 @@ int main()
 
         cam.setFacingDir(pitch, yaw);
 
-        glm::mat4 view = cam.getViewMatrix();
         testShader.use();
+        glm::mat4 projection = glm::perspective(glm::radians(fov), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
+        glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glm::mat4 view = cam.getViewMatrix();
         glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
         glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
@@ -125,5 +125,23 @@ void processInput(GLFWwindow* window)
     else if (pitch < -89.0f)
     {
         pitch = -89.0f;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+    {
+        fov -= 0.5f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
+    {
+        fov += 0.5f;
+    }
+
+    if (fov < 10.f)
+    {
+        fov = 10.f;
+    }
+    else if (fov > 90.f)
+    {
+        fov = 90.0f;
     }
 }
