@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <cmath>
 
 #include "Shader.h"
 #include "SquareRender.h"
@@ -50,12 +51,15 @@ int main()
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
     glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-    glm::mat4 view = cam.getViewMatrix();
-    glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
     // main loop
     while (!glfwWindowShouldClose(window))
     {
+        cam.position.x = 4 * sin(glfwGetTime());
+        glm::mat4 view = cam.getViewMatrix();
+        testShader.use();
+        glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
+
         glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
