@@ -5,6 +5,10 @@
 #include "Shader.h"
 #include "SquareRender.h"
 
+#include <glm/mat4x4.hpp> 
+#include <glm/ext/matrix_clip_space.hpp> 
+#include <glm/gtc/type_ptr.hpp>
+
 const unsigned int SCREEN_WIDTH = 1600;
 const unsigned int SCREEN_HEIGHT = 900;
 
@@ -37,6 +41,15 @@ int main()
     Shader testShader;
     testShader.compile("./shaders/square.vs", "./shaders/square.fs");
     SquareRender testRender(testShader);
+
+    testShader.use();
+
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
+    glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+    glm::mat4 view = glm::mat4(1.0f);
+    view = glm::translate(view, glm::vec3(0.f, 0.f, -1.5f));
+    glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
     // main loop
     while (!glfwWindowShouldClose(window))
