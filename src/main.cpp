@@ -14,6 +14,9 @@
 const unsigned int SCREEN_WIDTH = 1600;
 const unsigned int SCREEN_HEIGHT = 900;
 
+float yaw = -90.0f;
+float pitch = -20.0f;
+
 Camera cam;
 
 void processInput(GLFWwindow* window);
@@ -62,7 +65,8 @@ int main()
     {
         processInput(window);
 
-        cam.facingDir.x = 0.5f * cos(glfwGetTime());
+        // cam.facingDir.x = 0.5f * cos(glfwGetTime());
+        cam.setFacingDir(pitch, yaw);
 
         // cam.position.x = 4 * sin(glfwGetTime());
         glm::mat4 view = cam.getViewMatrix();

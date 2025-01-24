@@ -17,5 +17,6 @@ public:
     glm::vec3 facingDir; // direction that camera is facing
 
     Camera();
+    void setFacingDir(float pitch, float yaw);
     glm::mat4 getViewMatrix();
 };
