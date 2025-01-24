@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "SquareRender.h"
 #include "Camera.h"
+#include "FlappyBird.h"
 
 #include <glm/mat4x4.hpp> 
 #include <glm/ext/matrix_clip_space.hpp> 
@@ -14,10 +15,17 @@
 const unsigned int SCREEN_WIDTH = 1600;
 const unsigned int SCREEN_HEIGHT = 900;
 
+FlappyBird bird;
+
 Camera cam;
 float yaw = -90.0f;
 float pitch = 0.0f;
 float fov = 45.0f;
+
+float lastFrame = 0.0f;
+float dt = 0.0f;
+
+bool flap = false;
 
 void processInput(GLFWwindow* window);
 
@@ -54,9 +62,18 @@ int main()
 
     cam.position = glm::vec3(0.0f, 0.0f, 10.f);
 
+    bird.position = glm::vec3(0.0, 6.0f, -5.0f);
+    bird.velocity = glm::vec3(0.0, 0.8f, 0.0f);
+
     // main loop
     while (!glfwWindowShouldClose(window))
     {
+        float currentFrame = glfwGetTime();
+        dt = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
+        bird.move(dt, flap);
+
         processInput(window);
 
         cam.setFacingDir(pitch, yaw);
@@ -72,7 +89,8 @@ int main()
 
         // draw here
         testRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(-5.0f, -0.f, -5.f));
-        testRender.draw(glm::vec3(1.0f, 0.0f, 0.1f), glm::vec3(0.f, 5.f, -5.f));
+        testRender.draw(glm::vec3(1.0f, 0.0f, 0.1f), glm::vec3(3.f, 5.f, -5.f));
+        testRender.draw(glm::vec3(1.0f, 0.0f, 0.3f), bird.position);
  
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -143,5 +161,14 @@ void processInput(GLFWwindow* window)
     else if (fov > 90.f)
     {
         fov = 90.0f;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+        flap = true;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
+    {
+        flap = false;
     }
 }

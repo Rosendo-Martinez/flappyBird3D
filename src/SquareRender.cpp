@@ -42,7 +42,7 @@ void SquareRender::draw(glm::vec3 color, glm::vec3 pos)
 
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, pos);
-    model = glm::rotate(model, glm::radians(45.f), glm::vec3(0.0f, 0.0f, 1.0f));
+    // model = glm::rotate(model, glm::radians(45.f), glm::vec3(0.0f, 0.0f, 1.0f));
     glUniformMatrix4fv(glGetUniformLocation(this->shader.ID, "model"), 1, GL_FALSE, glm::value_ptr(model));    
 
     // set color
