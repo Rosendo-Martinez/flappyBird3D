@@ -14,10 +14,9 @@
 const unsigned int SCREEN_WIDTH = 1600;
 const unsigned int SCREEN_HEIGHT = 900;
 
+Camera cam;
 float yaw = -90.0f;
 float pitch = -20.0f;
-
-Camera cam;
 
 void processInput(GLFWwindow* window);
 
@@ -50,25 +49,20 @@ int main()
     Shader testShader;
     testShader.compile("./shaders/square.vs", "./shaders/square.fs");
     SquareRender testRender(testShader);
-
     testShader.use();
 
     cam.position = glm::vec3(0.0f, 0.0f, 10.f);
-    cam.facingDir = glm::vec3(0.0f, 0.0f, -1.0f);
 
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
     glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
 
     // main loop
     while (!glfwWindowShouldClose(window))
     {
         processInput(window);
 
-        // cam.facingDir.x = 0.5f * cos(glfwGetTime());
         cam.setFacingDir(pitch, yaw);
 
-        // cam.position.x = 4 * sin(glfwGetTime());
         glm::mat4 view = cam.getViewMatrix();
         testShader.use();
         glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));

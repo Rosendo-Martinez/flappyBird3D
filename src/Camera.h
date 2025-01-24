@@ -12,9 +12,11 @@
  */
 class Camera
 {
+private:
+    glm::vec3 facingDir; // direction that camera is facing
+
 public:
     glm::vec3 position; // position of camera
-    glm::vec3 facingDir; // direction that camera is facing
 
     Camera();
     void setFacingDir(float pitch, float yaw);
