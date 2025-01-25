@@ -31,17 +31,6 @@ SquareRender::SquareRender(Shader shader)
     this->shader = shader;
 }
 
-/**
- * Draws the square.
- * 
- * Assumes some shader program is being used.
- */
-void SquareRender::draw(glm::vec3 color, glm::vec3 pos)
-{
-    glm::mat4 model = this->getModelMatrix(pos);
-    this->draw(color, model);
-}
-
 void SquareRender::draw(glm::vec3 color, glm::mat4 model)
 {
     this->shader.use();
@@ -61,10 +50,13 @@ void SquareRender::draw(glm::vec3 color, glm::mat4 model)
     glUseProgram(0);
 }
 
-glm::mat4 SquareRender::getModelMatrix(glm::vec3 pos)
+glm::mat4 SquareRender::getModelMatrix(glm::vec3 pos, glm::vec3 size, float yaw, float pitch)
 {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, pos);
-
+    model = glm::rotate(model, glm::radians(yaw), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(pitch), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::scale(model, size);
+    
     return model;
 }
