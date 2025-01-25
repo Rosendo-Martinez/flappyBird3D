@@ -29,6 +29,8 @@ float dt = 0.0f;
 FlappyBird bird;
 bool flap = false;
 
+Map MAP;
+
 void processInput(GLFWwindow* window);
 
 int main()
@@ -72,6 +74,13 @@ int main()
     cam.position = glm::vec3(0.0f, 25.0f, 35.f);
     bird.position = glm::vec3(0.0, 0.0f, 0.0f);
     bird.velocity = glm::vec3(0.0, 5.0f, 0.0f);
+
+    MAP.left = -50;
+    MAP.right = 50;
+    MAP.top = 50;
+    MAP.bottom = 0;
+
+    PipeList pipeList(MAP);
 
     // main loop
     while (!glfwWindowShouldClose(window))
@@ -131,6 +140,15 @@ int main()
         cubeRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), model);
         glDisable(GL_DEPTH_TEST);
         lineRender.drawAxes(model);
+
+        for (auto& pipe : pipeList.pipes)
+        {
+            model = cubeRender.getModelMatrix(pipe.position, pipe.size);
+            glEnable(GL_DEPTH_TEST);
+            cubeRender.draw(glm::vec3(0.9, 0.0, 0.0), model);
+            glDisable(GL_DEPTH_TEST);
+            lineRender.drawAxes(model);
+        }
  
         glfwSwapBuffers(window);
         glfwPollEvents();
