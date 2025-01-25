@@ -27,7 +27,7 @@ PipeList::PipeList(Map map)
     : map(map)
 {
     // create two pipes
-    const float SPEED_X = -(map.left - map.right) / 13.0f;
+    const float SPEED_X = -(map.right - map.left) / 13.0f;
     const float SPACE_BETWEEN = (map.top - map.bottom) * 0.25 + map.bottom;
     const float HEIGHT_BOTTOM = (map.top - map.bottom) * 0.5 - SPACE_BETWEEN * 0.5 + map.bottom;
 
@@ -46,4 +46,18 @@ PipeList::PipeList(Map map)
 
     pipes.push_back(top);
     pipes.push_back(bottom);    
+}
+
+void PipeList::update(float dt)
+{
+    for (auto& pipe : pipes)
+    {
+        pipe.position += pipe.velocity * dt;
+
+        if (pipe.position.x < map.left)
+        {
+            pipe.position.x = map.right;
+        }
+    }
+
 }

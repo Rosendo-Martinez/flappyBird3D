@@ -94,6 +94,7 @@ int main()
 
         processInput(window);
         bird.move(dt, flap);
+        pipeList.update(dt);
         cam.setFacingDir(pitch, yaw);
 
         glClearColor(0.5f, 0.5f, 0.5f, 1.0f);

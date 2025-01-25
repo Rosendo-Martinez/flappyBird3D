@@ -31,4 +31,6 @@ public:
     Map map;
 
     PipeList(Map map);
+
+    void update(float dt);
 };
