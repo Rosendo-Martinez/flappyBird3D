@@ -135,7 +135,7 @@ int main()
         squareRender.draw(glm::vec3(0.75f, 0.75f, 0.75f), model);
 
         // burb (bird)
-        model = cubeRender.getModelMatrix(bird.position, glm::vec3(2.0f));
+        model = cubeRender.getModelMatrix(bird.position, glm::vec3(4.0f));
         glEnable(GL_DEPTH_TEST);
         cubeRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), model);
         glDisable(GL_DEPTH_TEST);
