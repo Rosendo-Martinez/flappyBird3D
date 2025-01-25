@@ -23,6 +23,11 @@ LineRender::LineRender(Shader shader)
     this->shader = shader;
 }
 
+/**
+ * Start and end are in WORLD coordinates.
+ * 
+ * ZA WARUDO!
+ */
 void LineRender::draw(glm::vec3 start, glm::vec3 end, glm::vec3 color) 
 {
     this->shader.use();
