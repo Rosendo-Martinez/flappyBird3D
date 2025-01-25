@@ -22,6 +22,8 @@ struct Pipe
     glm::vec3 position;
     glm::vec3 size;
     glm::vec3 velocity;
+
+    bool isDead = false;
 };
 
 class PipeList

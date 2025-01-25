@@ -1,4 +1,5 @@
 #include "FlappyBird.h"
+#include <algorithm>
 
 FlappyBird::FlappyBird() 
     : position(0.0f), velocity(0.0f)
@@ -50,13 +51,15 @@ PipeList::PipeList(Map map)
 
 void PipeList::update(float dt)
 {
+    pipes.erase(std::remove_if(pipes.begin(), pipes.end(), [](const Pipe & p) { return p.isDead; }), pipes.end());
+
     for (auto& pipe : pipes)
     {
         pipe.position += pipe.velocity * dt;
 
         if (pipe.position.x < map.left)
         {
-            pipe.position.x = map.right;
+            pipe.isDead = true;
         }
     }
 
