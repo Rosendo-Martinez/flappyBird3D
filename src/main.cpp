@@ -7,6 +7,7 @@
 #include "SquareRender.h"
 #include "Camera.h"
 #include "FlappyBird.h"
+#include "LineRender.h"
 
 #include <glm/mat4x4.hpp> 
 #include <glm/ext/matrix_clip_space.hpp> 
@@ -60,6 +61,12 @@ int main()
     SquareRender testRender(testShader);
     testShader.use();
 
+    // Line render stuff
+    Shader lineShader;
+    lineShader.compile("./shaders/line.vs", "./shaders/line.fs");
+    LineRender lineRender(lineShader);
+
+
     cam.position = glm::vec3(0.0f, 0.0f, 25.f);
 
     bird.position = glm::vec3(0.0, 0.0f, 0.0f);
@@ -78,19 +85,28 @@ int main()
 
         cam.setFacingDir(pitch, yaw);
 
+        glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
         testShader.use();
         glm::mat4 projection = glm::perspective(glm::radians(fov), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
         glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glm::mat4 view = cam.getViewMatrix();
         glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
-
-        glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
         // draw here
         testRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(-5.0f, -0.f, 0.f));
         testRender.draw(glm::vec3(1.0f, 0.0f, 0.1f), glm::vec3(3.f, 5.f, 0.f));
         testRender.draw(glm::vec3(1.0f, 0.0f, 0.3f), bird.position);
+
+        // coordinte system
+        lineShader.use();
+        glUniformMatrix4fv(glGetUniformLocation(lineShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(glGetUniformLocation(lineShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
+        // draw
+        lineRender.draw(glm::vec3(0.0f), glm::vec3(1.0,0.0,0.0), glm::vec3(1.0,0.0,0.0)); // x-axis
+        lineRender.draw(glm::vec3(0.0f), glm::vec3(0.0,1.0,0.0), glm::vec3(0.01,0.01,0.01)); // y-axis
+        lineRender.draw(glm::vec3(0.0f), glm::vec3(0.0,0.0,1.0), glm::vec3(1.0,1.0,1.0)); // z-axis
+
  
         glfwSwapBuffers(window);
         glfwPollEvents();
