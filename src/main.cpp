@@ -85,18 +85,20 @@ int main()
         glm::mat4 projection = glm::perspective(glm::radians(fov), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
         glm::mat4 view = cam.getViewMatrix();
 
-        // draw squares
+        // set projection and view matrix
+        lineShader.use();
+        glUniformMatrix4fv(glGetUniformLocation(lineShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(glGetUniformLocation(lineShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
         squareShader.use();
         glUniformMatrix4fv(glGetUniformLocation(squareShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(squareShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+        // draw squares
         squareRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(-5.0f, -0.f, 0.f));
         squareRender.draw(glm::vec3(1.0f, 0.0f, 0.1f), glm::vec3(3.f, 5.f, 0.f));
         squareRender.draw(glm::vec3(1.0f, 0.0f, 0.3f), bird.position);
 
         // draw coordinate axes
-        lineShader.use();
-        glUniformMatrix4fv(glGetUniformLocation(lineShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-        glUniformMatrix4fv(glGetUniformLocation(lineShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
         lineRender.draw(glm::vec3(0.0f), glm::vec3(1.0,0.0,0.0), glm::vec3(1.0,0.0,0.0)); // x-axis
         lineRender.draw(glm::vec3(0.0f), glm::vec3(0.0,1.0,0.0), glm::vec3(0.01,0.01,0.01)); // y-axis
         lineRender.draw(glm::vec3(0.0f), glm::vec3(0.0,0.0,1.0), glm::vec3(1.0,1.0,1.0)); // z-axis
