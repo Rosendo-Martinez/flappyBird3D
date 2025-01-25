@@ -6,8 +6,8 @@ run : ./bin/main.exe
 clean : 
 	rm -f ./bin/*.o ./bin/main.exe
 
-./bin/main.exe : ./src/main.cpp ./bin/Shader.o ./bin/SquareRender.o ./bin/Camera.o ./bin/FlappyBird.o ./bin/LineRender.o
-	g++ ./src/main.cpp ./dep/glad/src/glad.c ./bin/Shader.o ./bin/SquareRender.o ./bin/Camera.o ./bin/FlappyBird.o ./bin/LineRender.o -o ./bin/main.exe -I./dep/glad/include -lglfw -ldl
+./bin/main.exe : ./src/main.cpp ./bin/Shader.o ./bin/SquareRender.o ./bin/Camera.o ./bin/FlappyBird.o ./bin/LineRender.o ./bin/CubeRender.o
+	g++ ./src/main.cpp ./dep/glad/src/glad.c ./bin/Shader.o ./bin/SquareRender.o ./bin/Camera.o ./bin/FlappyBird.o ./bin/LineRender.o ./bin/CubeRender.o -o ./bin/main.exe -I./dep/glad/include -lglfw -ldl
 
 ./bin/Shader.o : ./src/Shader.cpp ./src/Shader.h
 	g++ -c ./src/Shader.cpp -o ./bin/Shader.o -I./dep/glad/include
@@ -23,3 +23,6 @@ clean :
 
 ./bin/LineRender.o : ./src/LineRender.cpp ./src/LineRender.h 
 	g++ -c ./src/LineRender.cpp -o ./bin/LineRender.o -I./dep/glad/include
+
+./bin/CubeRender.o : ./src/CubeRender.cpp ./src/CubeRender.h
+	g++ -c ./src/CubeRender.cpp -o ./bin/CubeRender.o -I./dep/glad/include

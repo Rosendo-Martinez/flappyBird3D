@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "FlappyBird.h"
 #include "LineRender.h"
+#include "CubeRender.h"
 
 #include <glm/mat4x4.hpp> 
 #include <glm/ext/matrix_clip_space.hpp> 
@@ -65,6 +66,9 @@ int main()
     lineShader.compile("./shaders/line.vs", "./shaders/line.fs");
     LineRender lineRender(lineShader);
 
+    // Cube rendering init
+    CubeRender cubeRender(squareShader);
+
     cam.position = glm::vec3(0.0f, 0.0f, 25.f);
     bird.position = glm::vec3(0.0, 0.0f, 0.0f);
     bird.velocity = glm::vec3(0.0, 5.0f, 0.0f);
@@ -103,8 +107,8 @@ int main()
         lineRender.drawAxes(model);
 
         // burb (bird)
-        model = squareRender.getModelMatrix(bird.position);
-        squareRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), model);
+        model = cubeRender.getModelMatrix(bird.position, glm::vec3(1.0f));
+        cubeRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), model);
         lineRender.drawAxes(model);
  
         glfwSwapBuffers(window);
