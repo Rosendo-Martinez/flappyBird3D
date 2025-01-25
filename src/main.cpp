@@ -60,10 +60,10 @@ int main()
     SquareRender testRender(testShader);
     testShader.use();
 
-    cam.position = glm::vec3(0.0f, 0.0f, 10.f);
+    cam.position = glm::vec3(0.0f, 0.0f, 25.f);
 
-    bird.position = glm::vec3(0.0, 6.0f, -5.0f);
-    bird.velocity = glm::vec3(0.0, 0.8f, 0.0f);
+    bird.position = glm::vec3(0.0, 0.0f, 0.0f);
+    bird.velocity = glm::vec3(0.0, 5.0f, 0.0f);
 
     // main loop
     while (!glfwWindowShouldClose(window))
@@ -88,8 +88,8 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw here
-        testRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(-5.0f, -0.f, -5.f));
-        testRender.draw(glm::vec3(1.0f, 0.0f, 0.1f), glm::vec3(3.f, 5.f, -5.f));
+        testRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(-5.0f, -0.f, 0.f));
+        testRender.draw(glm::vec3(1.0f, 0.0f, 0.1f), glm::vec3(3.f, 5.f, 0.f));
         testRender.draw(glm::vec3(1.0f, 0.0f, 0.3f), bird.position);
  
         glfwSwapBuffers(window);

@@ -8,23 +8,13 @@ FlappyBird::FlappyBird()
 
 void FlappyBird::move(float dt, bool flap)
 {
-    /**
-     * Super simple logic for moving.
-     * 
-     * if flap:
-     *   cur_pos += flap_speed * dt
-     * 
-     * pos_next += vel_cur * dt
-     * vel_next += grav * dt
-     *   
-     */
-
-    const float FLAP_SPEED = 1.0f;
-    const float GRAVITY = 0.09f;
+    const float FLAP_SPEED = 6.0f;
+    const float GRAVITY = 3.0f;
 
     if (flap)
     {
         this->position += FLAP_SPEED * dt * glm::vec3(0.0, 1.0, 0.0);
+        this->velocity *= 0;
     }
     else
     {
