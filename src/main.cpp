@@ -16,8 +16,6 @@
 const unsigned int SCREEN_WIDTH = 1600;
 const unsigned int SCREEN_HEIGHT = 900;
 
-FlappyBird bird;
-
 Camera cam;
 float yaw = -90.0f;
 float pitch = 0.0f;
@@ -26,6 +24,7 @@ float fov = 45.0f;
 float lastFrame = 0.0f;
 float dt = 0.0f;
 
+FlappyBird bird;
 bool flap = false;
 
 void processInput(GLFWwindow* window);
@@ -55,20 +54,17 @@ int main()
         return -1;
     }
 
-    // set up for rendering square
-    Shader testShader;
-    testShader.compile("./shaders/square.vs", "./shaders/square.fs");
-    SquareRender testRender(testShader);
-    testShader.use();
+    // Square rendering init
+    Shader squareShader;
+    squareShader.compile("./shaders/square.vs", "./shaders/square.fs");
+    SquareRender squareRender(squareShader);
 
-    // Line render stuff
+    // Line rendering init
     Shader lineShader;
     lineShader.compile("./shaders/line.vs", "./shaders/line.fs");
     LineRender lineRender(lineShader);
 
-
     cam.position = glm::vec3(0.0f, 0.0f, 25.f);
-
     bird.position = glm::vec3(0.0, 0.0f, 0.0f);
     bird.velocity = glm::vec3(0.0, 5.0f, 0.0f);
 
@@ -79,34 +75,31 @@ int main()
         dt = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        bird.move(dt, flap);
-
         processInput(window);
-
+        bird.move(dt, flap);
         cam.setFacingDir(pitch, yaw);
 
         glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        testShader.use();
         glm::mat4 projection = glm::perspective(glm::radians(fov), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
-        glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glm::mat4 view = cam.getViewMatrix();
-        glUniformMatrix4fv(glGetUniformLocation(testShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
-        // draw here
-        testRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(-5.0f, -0.f, 0.f));
-        testRender.draw(glm::vec3(1.0f, 0.0f, 0.1f), glm::vec3(3.f, 5.f, 0.f));
-        testRender.draw(glm::vec3(1.0f, 0.0f, 0.3f), bird.position);
 
-        // coordinte system
+        // draw squares
+        squareShader.use();
+        glUniformMatrix4fv(glGetUniformLocation(squareShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(glGetUniformLocation(squareShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
+        squareRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(-5.0f, -0.f, 0.f));
+        squareRender.draw(glm::vec3(1.0f, 0.0f, 0.1f), glm::vec3(3.f, 5.f, 0.f));
+        squareRender.draw(glm::vec3(1.0f, 0.0f, 0.3f), bird.position);
+
+        // draw coordinate axes
         lineShader.use();
         glUniformMatrix4fv(glGetUniformLocation(lineShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(lineShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
-        // draw
         lineRender.draw(glm::vec3(0.0f), glm::vec3(1.0,0.0,0.0), glm::vec3(1.0,0.0,0.0)); // x-axis
         lineRender.draw(glm::vec3(0.0f), glm::vec3(0.0,1.0,0.0), glm::vec3(0.01,0.01,0.01)); // y-axis
         lineRender.draw(glm::vec3(0.0f), glm::vec3(0.0,0.0,1.0), glm::vec3(1.0,1.0,1.0)); // z-axis
-
  
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -118,6 +111,7 @@ int main()
 
 void processInput(GLFWwindow* window)
 {
+    // camera movement
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     {
         cam.position += cam.facingDir * 0.1f;
@@ -135,6 +129,7 @@ void processInput(GLFWwindow* window)
         cam.position += glm::normalize(glm::cross(cam.facingDir, cam.up)) * 0.1f;
     }
 
+    // camera facing direction
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
     {
         pitch += 0.2f;
@@ -151,7 +146,6 @@ void processInput(GLFWwindow* window)
     {
         yaw += 0.2f;
     }
-
     if (pitch > 89.0f)
     {
         pitch = 89.0f;
@@ -161,6 +155,7 @@ void processInput(GLFWwindow* window)
         pitch = -89.0f;
     }
 
+    // camera fov
     if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
     {
         fov -= 0.5f;
@@ -179,6 +174,7 @@ void processInput(GLFWwindow* window)
         fov = 90.0f;
     }
 
+    // bird flap
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
     {
         flap = true;
