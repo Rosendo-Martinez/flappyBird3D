@@ -13,4 +13,5 @@ private:
 public:
     LineRender(Shader shader);
     void draw(glm::vec3 start, glm::vec3 end, glm::vec3 color);
+    void drawAxes(glm::mat4 model);
 };

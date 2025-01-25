@@ -79,7 +79,7 @@ int main()
         bird.move(dt, flap);
         cam.setFacingDir(pitch, yaw);
 
-        glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.25f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         glm::mat4 projection = glm::perspective(glm::radians(fov), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
@@ -93,15 +93,15 @@ int main()
         glUniformMatrix4fv(glGetUniformLocation(squareShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(squareShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
-        // draw squares
-        squareRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(-5.0f, -0.f, 0.f));
-        squareRender.draw(glm::vec3(1.0f, 0.0f, 0.1f), glm::vec3(3.f, 5.f, 0.f));
-        squareRender.draw(glm::vec3(1.0f, 0.0f, 0.3f), bird.position);
+        glm::mat4 model = glm::mat4(1.0f);
 
-        // draw coordinate axes
-        lineRender.draw(glm::vec3(0.0f), glm::vec3(1.0,0.0,0.0), glm::vec3(1.0,0.0,0.0)); // x-axis
-        lineRender.draw(glm::vec3(0.0f), glm::vec3(0.0,1.0,0.0), glm::vec3(0.01,0.01,0.01)); // y-axis
-        lineRender.draw(glm::vec3(0.0f), glm::vec3(0.0,0.0,1.0), glm::vec3(1.0,1.0,1.0)); // z-axis
+        // ZA WARUDO (world axes)
+        lineRender.drawAxes(model);
+
+        // burb (bird)
+        model = squareRender.getModelMatrix(bird.position);
+        squareRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), model);
+        lineRender.drawAxes(model);
  
         glfwSwapBuffers(window);
         glfwPollEvents();

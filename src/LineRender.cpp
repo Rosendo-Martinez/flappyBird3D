@@ -44,3 +44,16 @@ void LineRender::draw(glm::vec3 start, glm::vec3 end, glm::vec3 color)
     glBindVertexArray(0);
     glUseProgram(0);
 }
+
+void LineRender::drawAxes(glm::mat4 model)
+{
+    const glm::vec3 xColor = glm::vec3(1.0f, 0.0f, 0.0f);
+    const glm::vec3 yColor = glm::vec3(0.0f, 1.0f, 0.0f);
+    const glm::vec3 zColor = glm::vec3(0.0f, 0.0f, 1.0f);
+    
+    glm::vec3 origin = glm::vec3(model[3][0], model[3][1], model[3][2]);
+
+    this->draw(origin, glm::vec3(model[0]) + origin, xColor);
+    this->draw(origin, glm::vec3(model[1]) + origin, yColor);
+    this->draw(origin, glm::vec3(model[2]) + origin, zColor);
+}

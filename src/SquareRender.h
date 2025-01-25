@@ -15,4 +15,6 @@ public:
     SquareRender(Shader shader);
 
     void draw(glm::vec3 color, glm::vec3 pos);
+    void draw(glm::vec3 color, glm::mat4 model);
+    glm::mat4 getModelMatrix(glm::vec3 pos);
 };
