@@ -31,6 +31,7 @@ class PipeList
 public:
     std::vector<Pipe> pipes;
     Map map;
+    float lastPipesTime = 0.0f;
 
     PipeList(Map map);
 
