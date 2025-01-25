@@ -83,7 +83,7 @@ int main()
         bird.move(dt, flap);
         cam.setFacingDir(pitch, yaw);
 
-        glClearColor(0.0f, 0.0f, 0.25f, 1.0f);
+        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         glm::mat4 projection = glm::perspective(glm::radians(fov), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
