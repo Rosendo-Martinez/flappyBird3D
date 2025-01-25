@@ -88,7 +88,7 @@ int main()
         cam.setFacingDir(pitch, yaw);
 
         glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glm::mat4 projection = glm::perspective(glm::radians(fov), (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1f, 250.0f);
         glm::mat4 view = cam.getViewMatrix();
@@ -108,19 +108,24 @@ int main()
 
         // grass
         model = squareRender.getModelMatrix(glm::vec3(0.0f), glm::vec3(100.0f, 50.0f, 0.0f), 0.0f, -90.0f);
+        glEnable(GL_DEPTH_TEST);
         squareRender.draw(glm::vec3(0.05f, 0.5f, 0.05f), model);
+        glDisable(GL_DEPTH_TEST);
         lineRender.drawAxes(model);
 
         // blue sky bg
         model = squareRender.getModelMatrix(glm::vec3(0.0f, 25.0f, -25.0f), glm::vec3(100.0f, 50.0f, 0.0f), 0.0f, 0.0f);
+        glEnable(GL_DEPTH_TEST);
         squareRender.draw(glm::vec3(0.05, 0.05, 0.5), model);
+        glDisable(GL_DEPTH_TEST);
         lineRender.drawAxes(model);
 
         // burb (bird)
         model = cubeRender.getModelMatrix(bird.position, glm::vec3(1.0f));
+        glEnable(GL_DEPTH_TEST);
         cubeRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), model);
+        glDisable(GL_DEPTH_TEST);
         lineRender.drawAxes(model);
-
  
         glfwSwapBuffers(window);
         glfwPollEvents();
