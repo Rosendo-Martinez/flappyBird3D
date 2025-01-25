@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <cmath>
+#include <string>
 
 #include "Shader.h"
 #include "SquareRender.h"
@@ -74,6 +75,9 @@ int main()
         float currentFrame = glfwGetTime();
         dt = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+        std::string title = "Flappy Bird 3D | " + std::to_string((int) std::round(dt * 1000));
+        glfwSetWindowTitle(window, title.c_str());
 
         processInput(window);
         bird.move(dt, flap);
