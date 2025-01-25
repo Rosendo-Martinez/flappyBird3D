@@ -21,7 +21,7 @@ const unsigned int SCREEN_HEIGHT = 900;
 Camera cam;
 float yaw = -90.0f;
 float pitch = 0.0f;
-float fov = 45.0f;
+float fov = 55.0f;
 
 float lastFrame = 0.0f;
 float dt = 0.0f;
@@ -69,7 +69,7 @@ int main()
     // Cube rendering init
     CubeRender cubeRender(squareShader);
 
-    cam.position = glm::vec3(0.0f, 0.0f, 25.f);
+    cam.position = glm::vec3(0.0f, 25.0f, 35.f);
     bird.position = glm::vec3(0.0, 0.0f, 0.0f);
     bird.velocity = glm::vec3(0.0, 5.0f, 0.0f);
 
