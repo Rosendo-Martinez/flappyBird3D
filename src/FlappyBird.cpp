@@ -53,33 +53,58 @@ void PipeList::update(float dt)
     {
         lastPipesTime = 0;
 
-        // make new pipes
-        // create two pipes
-        const float SPEED_X = -(map.right - map.left) / 6.5f;
-        const float SPACE_BETWEEN = config.SPACE_BETWEEN_PIPES;
-        float HEIGHT_BOTTOM = (map.top - map.bottom) * 0.5 - SPACE_BETWEEN * 0.5 + map.bottom;
+        const float PROBABILITY_OF_TALL_PIPE = 0.25f;
 
         const float PIPE_WIDTH = 10.0f;
         const float PIPE_LENGTH = 10.0f;
+        const float SPEED_X = -(map.right - map.left) / 6.5f;
+        const float SPACE_BETWEEN = config.SPACE_BETWEEN_PIPES;
+
+        if (rand() % 101 / 100.f <= PROBABILITY_OF_TALL_PIPE)
+        {
+            const float isTopPipe = rand() % 101 / 100.f <= 0.5f;
+
+            Pipe tall;
+            tall.size = glm::vec3(PIPE_WIDTH, (map.top - map.bottom - SPACE_BETWEEN), PIPE_LENGTH);
+            tall.velocity = glm::vec3(SPEED_X, 0.0f, 0.0f);
+
+            if (isTopPipe)
+            {
+                tall.position = glm::vec3(map.right, map.top - (tall.size.y/2.0f) , 0.0f);
+            }
+            else
+            {
+                tall.position = glm::vec3(map.right, map.bottom + (tall.size.y/2.0f), 0.0f);
+            }
+
+            pipes.push_back(tall);
+        }
+        else 
+        {
+            // make new pipes
+            // create two pipes
+            float HEIGHT_BOTTOM = (map.top - map.bottom) * 0.5 - SPACE_BETWEEN * 0.5 + map.bottom;
 
 
-        int RANGE_HEIGHT = config.MAX_PIPE_HEIGHT - config.MIN_PIPE_HEIGHT + 1;
-        int RANDOM_HEIGHT = rand() %  RANGE_HEIGHT + config.MIN_PIPE_HEIGHT;
 
-        HEIGHT_BOTTOM = (float) RANDOM_HEIGHT;
-        
-        Pipe bottom;
-        bottom.size = glm::vec3(PIPE_WIDTH, HEIGHT_BOTTOM, PIPE_LENGTH);
-        bottom.position = glm::vec3(map.right, map.bottom + HEIGHT_BOTTOM/2.0f, 0.0f);
-        bottom.velocity = glm::vec3(SPEED_X, 0.0f, 0.0f);
+            int RANGE_HEIGHT = config.MAX_PIPE_HEIGHT - config.MIN_PIPE_HEIGHT + 1;
+            int RANDOM_HEIGHT = rand() %  RANGE_HEIGHT + config.MIN_PIPE_HEIGHT;
 
-        Pipe top;
-        top.size = glm::vec3(PIPE_WIDTH, (map.top - map.bottom) - SPACE_BETWEEN - HEIGHT_BOTTOM, PIPE_LENGTH);
-        top.position = glm::vec3(map.right, map.top - top.size.y/2.0f, 0.0f);
-        top.velocity = glm::vec3(SPEED_X, 0.0f, 0.0f);
+            HEIGHT_BOTTOM = (float) RANDOM_HEIGHT;
+            
+            Pipe bottom;
+            bottom.size = glm::vec3(PIPE_WIDTH, HEIGHT_BOTTOM, PIPE_LENGTH);
+            bottom.position = glm::vec3(map.right, map.bottom + HEIGHT_BOTTOM/2.0f, 0.0f);
+            bottom.velocity = glm::vec3(SPEED_X, 0.0f, 0.0f);
 
-        pipes.push_back(top);
-        pipes.push_back(bottom);    
+            Pipe top;
+            top.size = glm::vec3(PIPE_WIDTH, (map.top - map.bottom) - SPACE_BETWEEN - HEIGHT_BOTTOM, PIPE_LENGTH);
+            top.position = glm::vec3(map.right, map.top - top.size.y/2.0f, 0.0f);
+            top.velocity = glm::vec3(SPEED_X, 0.0f, 0.0f);
+
+            pipes.push_back(top);
+            pipes.push_back(bottom);    
+        }
     }
 }
 
