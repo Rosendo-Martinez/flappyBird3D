@@ -84,7 +84,6 @@ void PipeList::update(float dt)
 
         int RANGE_HEIGHT = config.maxHeight - config.minHeight + 1;
         int RANDOM_HEIGHT = rand() %  RANGE_HEIGHT + config.minHeight;
-        std::cout << "hello\n";
 
         HEIGHT_BOTTOM = (float) RANDOM_HEIGHT;
         

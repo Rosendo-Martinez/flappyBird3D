@@ -21,7 +21,7 @@ const unsigned int SCREEN_HEIGHT = 900;
 Camera cam;
 float yaw = -90.0f;
 float pitch = 0.0f;
-float fov = 55.0f;
+float fov = 90.0f;
 
 float lastFrame = 0.0f;
 float dt = 0.0f;
