@@ -101,3 +101,35 @@ void PipeList::update(float dt)
         pipes.push_back(bottom);    
     }
 }
+
+bool isCollision(Pipe p, FlappyBird bird)
+{
+
+    glm::vec3 pMax = p.position + p.size/2.0f;
+    glm::vec3 pMin = p.position - p.size/2.0f;
+
+    glm::vec3 bMax = bird.position + bird.size/2.0f;
+    glm::vec3 bMin = bird.position - bird.size/2.0f;
+
+    // CREDIT: Miguel Casillas
+    // Copyied and pasted from his tutorial!
+    return(pMax.x > bMin.x &&
+    pMin.x < bMax.x &&
+    pMax.y > bMin.y &&
+    pMin.y < bMax.y &&
+    pMax.z > bMin.z &&
+    pMin.z < bMax.z);
+}
+
+bool PipeList::isBirdDead(FlappyBird bird)
+{
+    for (auto& pipe : pipes)
+    {
+        if (isCollision(pipe, bird))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
