@@ -18,7 +18,7 @@ struct Map
     float left, right, top, bottom;
 };
 
-struct PipeConfig
+struct GameConfiguration
 {
     int spaceBetween, minHeight, maxHeight;
 };
@@ -37,10 +37,10 @@ class PipeList
 public:
     std::vector<Pipe> pipes;
     Map map;
-    PipeConfig config;
+    GameConfiguration config;
     float lastPipesTime = 0.0f;
 
-    PipeList(Map map, PipeConfig config);
+    PipeList(Map map, GameConfiguration config);
 
     void update(float dt);
     bool isBirdDead(FlappyBird bird);

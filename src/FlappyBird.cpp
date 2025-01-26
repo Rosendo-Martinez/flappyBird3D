@@ -26,7 +26,7 @@ void FlappyBird::move(float dt, bool flap)
     }
 }
 
-PipeList::PipeList(Map map, PipeConfig config)
+PipeList::PipeList(Map map, GameConfiguration config)
     : map(map), config(config)
 {
     // create two pipes

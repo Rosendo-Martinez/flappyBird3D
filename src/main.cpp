@@ -30,7 +30,7 @@ FlappyBird bird;
 bool flap = false;
 
 Map MAP;
-PipeConfig config;
+GameConfiguration config;
 
 void processInput(GLFWwindow* window);
 
