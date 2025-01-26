@@ -20,9 +20,15 @@ struct Map
 
 struct GameConfiguration
 {
+    // Pipe configuration
     int SPACE_BETWEEN_PIPES;
     int MIN_PIPE_HEIGHT;
     int MAX_PIPE_HEIGHT;
+    float PIPE_SIZE_X;
+    float PIPE_SIZE_Z;
+    float PIPE_SPEED; // >0
+    float PROBABILITY_OF_TALL_PIPE; // [0,1]
+    float PIPE_GENERATION_RATE; // seconds
 };
 
 struct Pipe

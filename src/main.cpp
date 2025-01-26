@@ -85,6 +85,11 @@ int main()
     config.SPACE_BETWEEN_PIPES = 10;
     config.MIN_PIPE_HEIGHT = 10;
     config.MAX_PIPE_HEIGHT = 30;
+    config.PIPE_GENERATION_RATE = 4.0f;
+    config.PROBABILITY_OF_TALL_PIPE = 0.25f;
+    config.PIPE_SIZE_X = 10.0f;
+    config.PIPE_SIZE_Z = 10.0f;
+    config.PIPE_SPEED = (MAP.right - MAP.left) / 6.5f;
 
     PipeList pipeList(MAP, config);
 

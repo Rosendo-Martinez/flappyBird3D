@@ -29,7 +29,7 @@ void FlappyBird::move(float dt, bool flap)
 PipeList::PipeList(Map map, GameConfiguration config)
     : map(map), config(config)
 {
-    lastPipesTime = 4.0f; // PIPES GEN RATE
+    lastPipesTime = config.PIPE_GENERATION_RATE;
 }
 
 void PipeList::update(float dt)
@@ -46,27 +46,27 @@ void PipeList::update(float dt)
         }
     }
 
-    const float PIPES_GEN_RATE = 4.0f;
+    // const float PIPES_GEN_RATE = config.PIPE_GENERATION_RATE;
     lastPipesTime += dt;
 
-    if (lastPipesTime >= PIPES_GEN_RATE)
+    if (lastPipesTime >= config.PIPE_GENERATION_RATE)
     {
         lastPipesTime = 0;
 
-        const float PROBABILITY_OF_TALL_PIPE = 0.25f;
+        // const float PROBABILITY_OF_TALL_PIPE = config.PROBABILITY_OF_TALL_PIPE;
 
-        const float PIPE_WIDTH = 10.0f;
-        const float PIPE_LENGTH = 10.0f;
-        const float SPEED_X = -(map.right - map.left) / 6.5f;
-        const float SPACE_BETWEEN = config.SPACE_BETWEEN_PIPES;
+        // const float PIPE_WIDTH = config.PIPE_SIZE_X;
+        // const float PIPE_LENGTH = config.PIPE_SIZE_Z;
+        // const float SPEED_X = -config.PIPE_SPEED;
+        // const float SPACE_BETWEEN = config.SPACE_BETWEEN_PIPES;
 
-        if (rand() % 101 / 100.f <= PROBABILITY_OF_TALL_PIPE)
+        if (rand() % 101 / 100.f <= config.PROBABILITY_OF_TALL_PIPE)
         {
             const float isTopPipe = rand() % 101 / 100.f <= 0.5f;
 
             Pipe tall;
-            tall.size = glm::vec3(PIPE_WIDTH, (map.top - map.bottom - SPACE_BETWEEN), PIPE_LENGTH);
-            tall.velocity = glm::vec3(SPEED_X, 0.0f, 0.0f);
+            tall.size = glm::vec3(config.PIPE_SIZE_X, (map.top - map.bottom - config.SPACE_BETWEEN_PIPES), config.PIPE_SIZE_Z);
+            tall.velocity = glm::vec3(-config.PIPE_SPEED, 0.0f, 0.0f);
 
             if (isTopPipe)
             {
@@ -83,7 +83,7 @@ void PipeList::update(float dt)
         {
             // make new pipes
             // create two pipes
-            float HEIGHT_BOTTOM = (map.top - map.bottom) * 0.5 - SPACE_BETWEEN * 0.5 + map.bottom;
+            float HEIGHT_BOTTOM = (map.top - map.bottom) * 0.5 - config.SPACE_BETWEEN_PIPES * 0.5 + map.bottom;
 
 
 
@@ -93,14 +93,14 @@ void PipeList::update(float dt)
             HEIGHT_BOTTOM = (float) RANDOM_HEIGHT;
             
             Pipe bottom;
-            bottom.size = glm::vec3(PIPE_WIDTH, HEIGHT_BOTTOM, PIPE_LENGTH);
+            bottom.size = glm::vec3(config.PIPE_SIZE_X, HEIGHT_BOTTOM, config.PIPE_SIZE_Z);
             bottom.position = glm::vec3(map.right, map.bottom + HEIGHT_BOTTOM/2.0f, 0.0f);
-            bottom.velocity = glm::vec3(SPEED_X, 0.0f, 0.0f);
+            bottom.velocity = glm::vec3(-config.PIPE_SPEED, 0.0f, 0.0f);
 
             Pipe top;
-            top.size = glm::vec3(PIPE_WIDTH, (map.top - map.bottom) - SPACE_BETWEEN - HEIGHT_BOTTOM, PIPE_LENGTH);
+            top.size = glm::vec3(config.PIPE_SIZE_X, (map.top - map.bottom) - config.SPACE_BETWEEN_PIPES - HEIGHT_BOTTOM, config.PIPE_SIZE_Z);
             top.position = glm::vec3(map.right, map.top - top.size.y/2.0f, 0.0f);
-            top.velocity = glm::vec3(SPEED_X, 0.0f, 0.0f);
+            top.velocity = glm::vec3(-config.PIPE_SPEED, 0.0f, 0.0f);
 
             pipes.push_back(top);
             pipes.push_back(bottom);    
