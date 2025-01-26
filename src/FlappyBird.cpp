@@ -1,5 +1,7 @@
 #include "FlappyBird.h"
 #include <algorithm>
+#include <cstdlib>
+#include <iostream>
 
 FlappyBird::FlappyBird() 
     : position(0.0f), velocity(0.0f)
@@ -24,8 +26,8 @@ void FlappyBird::move(float dt, bool flap)
     }
 }
 
-PipeList::PipeList(Map map)
-    : map(map)
+PipeList::PipeList(Map map, PipeConfig config)
+    : map(map), config(config)
 {
     // create two pipes
     const float SPEED_X = -(map.right - map.left) / 13.0f;
@@ -63,7 +65,7 @@ void PipeList::update(float dt)
         }
     }
 
-    const float PIPES_GEN_RATE = 9.0f;
+    const float PIPES_GEN_RATE = 5.0f;
     lastPipesTime += dt;
 
     if (lastPipesTime >= PIPES_GEN_RATE)
@@ -73,11 +75,18 @@ void PipeList::update(float dt)
         // make new pipes
         // create two pipes
         const float SPEED_X = -(map.right - map.left) / 13.0f;
-        const float SPACE_BETWEEN = (map.top - map.bottom) * 0.25 + map.bottom;
-        const float HEIGHT_BOTTOM = (map.top - map.bottom) * 0.5 - SPACE_BETWEEN * 0.5 + map.bottom;
+        const float SPACE_BETWEEN = config.spaceBetween;
+        float HEIGHT_BOTTOM = (map.top - map.bottom) * 0.5 - SPACE_BETWEEN * 0.5 + map.bottom;
 
         const float PIPE_WIDTH = 10.0f;
         const float PIPE_LENGTH = 10.0f;
+
+
+        int RANGE_HEIGHT = config.maxHeight - config.minHeight + 1;
+        int RANDOM_HEIGHT = rand() %  RANGE_HEIGHT + config.minHeight;
+        std::cout << "hello\n";
+
+        HEIGHT_BOTTOM = (float) RANDOM_HEIGHT;
         
         Pipe bottom;
         bottom.size = glm::vec3(PIPE_WIDTH, HEIGHT_BOTTOM, PIPE_LENGTH);

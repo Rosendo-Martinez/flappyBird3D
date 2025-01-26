@@ -30,6 +30,7 @@ FlappyBird bird;
 bool flap = false;
 
 Map MAP;
+PipeConfig config;
 
 void processInput(GLFWwindow* window);
 
@@ -80,7 +81,11 @@ int main()
     MAP.top = 50;
     MAP.bottom = 0;
 
-    PipeList pipeList(MAP);
+    config.spaceBetween = 10;
+    config.minHeight = 10;
+    config.maxHeight = 30;
+
+    PipeList pipeList(MAP, config);
 
     // main loop
     while (!glfwWindowShouldClose(window))

@@ -17,6 +17,11 @@ struct Map
     float left, right, top, bottom;
 };
 
+struct PipeConfig
+{
+    int spaceBetween, minHeight, maxHeight;
+};
+
 struct Pipe
 {
     glm::vec3 position;
@@ -31,9 +36,10 @@ class PipeList
 public:
     std::vector<Pipe> pipes;
     Map map;
+    PipeConfig config;
     float lastPipesTime = 0.0f;
 
-    PipeList(Map map);
+    PipeList(Map map, PipeConfig config);
 
     void update(float dt);
 };
