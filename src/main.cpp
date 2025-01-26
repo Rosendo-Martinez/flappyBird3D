@@ -102,7 +102,7 @@ int main()
         dt = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        std::string title = "Flappy Bird 3D | " + std::to_string((int) std::round(dt * 1000));
+        std::string title = "Flappy Bird 3D | " + std::to_string((int) std::round(dt * 1000)) + " ms";
         glfwSetWindowTitle(window, title.c_str());
 
         if (pipeList.isBirdDead(bird) || bird.position.y < MAP.bottom || bird.position.y > MAP.top) // reset
@@ -137,15 +137,15 @@ int main()
         // ZA WARUDO (world axes)
 
         // grass
-        model = squareRender.getModelMatrix(glm::vec3(0.0f), glm::vec3(100.0f, 50.0f, 0.0f), 0.0f, -90.0f);
+        model = squareRender.getModelMatrix(glm::vec3(0.0f), glm::vec3(300.0f, 50.0f, 0.0f), 0.0f, -90.0f);
         squareRender.draw(glm::vec3(0.05f, 0.5f, 0.05f), model);
 
         // blue sky bg
-        model = squareRender.getModelMatrix(glm::vec3(0.0f, 25.0f, -25.0f), glm::vec3(100.0f, 50.0f, 0.0f), 0.0f, 0.0f);
+        model = squareRender.getModelMatrix(glm::vec3(0.0f, 25.0f, -25.0f), glm::vec3(300.0f, 50.0f, 0.0f), 0.0f, 0.0f);
         squareRender.draw(glm::vec3(0.05, 0.05, 0.5), model);
 
         // ceiling
-        model = squareRender.getModelMatrix(glm::vec3(0.0f, 50.0f, 0.0f), glm::vec3(100.0f, 50.0f, 0.0f), 0.0f, -90.0f);
+        model = squareRender.getModelMatrix(glm::vec3(0.0f, 50.0f, 0.0f), glm::vec3(300.0f, 50.0f, 0.0f), 0.0f, -90.0f);
         squareRender.draw(glm::vec3(0.75f, 0.75f, 0.75f), model);
 
         // burb (bird)
