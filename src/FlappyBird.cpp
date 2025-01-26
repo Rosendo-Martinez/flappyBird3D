@@ -11,8 +11,8 @@ FlappyBird::FlappyBird()
 
 void FlappyBird::move(float dt, bool flap)
 {
-    const float FLAP_SPEED = 12.0f;
-    const float GRAVITY = 6.0f;
+    const float FLAP_SPEED = 60.0f;
+    const float GRAVITY = 30.0f;
 
     if (flap)
     {
@@ -30,7 +30,7 @@ PipeList::PipeList(Map map, PipeConfig config)
     : map(map), config(config)
 {
     // create two pipes
-    const float SPEED_X = -(map.right - map.left) / 13.0f;
+    const float SPEED_X = -(map.right - map.left) / 6.5f;
     const float SPACE_BETWEEN = (map.top - map.bottom) * 0.25 + map.bottom;
     const float HEIGHT_BOTTOM = (map.top - map.bottom) * 0.5 - SPACE_BETWEEN * 0.5 + map.bottom;
 
@@ -65,7 +65,7 @@ void PipeList::update(float dt)
         }
     }
 
-    const float PIPES_GEN_RATE = 5.0f;
+    const float PIPES_GEN_RATE = 4.0f;
     lastPipesTime += dt;
 
     if (lastPipesTime >= PIPES_GEN_RATE)
@@ -74,7 +74,7 @@ void PipeList::update(float dt)
 
         // make new pipes
         // create two pipes
-        const float SPEED_X = -(map.right - map.left) / 13.0f;
+        const float SPEED_X = -(map.right - map.left) / 6.5f;
         const float SPACE_BETWEEN = config.spaceBetween;
         float HEIGHT_BOTTOM = (map.top - map.bottom) * 0.5 - SPACE_BETWEEN * 0.5 + map.bottom;
 
