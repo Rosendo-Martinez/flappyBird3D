@@ -29,26 +29,7 @@ void FlappyBird::move(float dt, bool flap)
 PipeList::PipeList(Map map, GameConfiguration config)
     : map(map), config(config)
 {
-    // create two pipes
-    const float SPEED_X = -(map.right - map.left) / 6.5f;
-    const float SPACE_BETWEEN = (map.top - map.bottom) * 0.25 + map.bottom;
-    const float HEIGHT_BOTTOM = (map.top - map.bottom) * 0.5 - SPACE_BETWEEN * 0.5 + map.bottom;
-
-    const float PIPE_WIDTH = 10.0f;
-    const float PIPE_LENGTH = 10.0f;
-    
-    Pipe bottom;
-    bottom.size = glm::vec3(PIPE_WIDTH, HEIGHT_BOTTOM, PIPE_LENGTH);
-    bottom.position = glm::vec3(map.right, map.bottom + HEIGHT_BOTTOM/2.0f, 0.0f);
-    bottom.velocity = glm::vec3(SPEED_X, 0.0f, 0.0f);
-
-    Pipe top;
-    top.size = glm::vec3(PIPE_WIDTH, (map.top - map.bottom) - SPACE_BETWEEN - HEIGHT_BOTTOM, PIPE_LENGTH);
-    top.position = glm::vec3(map.right, map.top - top.size.y/2.0f, 0.0f);
-    top.velocity = glm::vec3(SPEED_X, 0.0f, 0.0f);
-
-    pipes.push_back(top);
-    pipes.push_back(bottom);    
+    lastPipesTime = 4.0f; // PIPES GEN RATE
 }
 
 void PipeList::update(float dt)
