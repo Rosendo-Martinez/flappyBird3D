@@ -82,9 +82,9 @@ int main()
     MAP.top = 50;
     MAP.bottom = 0;
 
-    config.spaceBetween = 10;
-    config.minHeight = 10;
-    config.maxHeight = 30;
+    config.SPACE_BETWEEN_PIPES = 10;
+    config.MIN_PIPE_HEIGHT = 10;
+    config.MAX_PIPE_HEIGHT = 30;
 
     PipeList pipeList(MAP, config);
 

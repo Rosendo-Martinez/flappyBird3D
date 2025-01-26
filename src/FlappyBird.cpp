@@ -75,15 +75,15 @@ void PipeList::update(float dt)
         // make new pipes
         // create two pipes
         const float SPEED_X = -(map.right - map.left) / 6.5f;
-        const float SPACE_BETWEEN = config.spaceBetween;
+        const float SPACE_BETWEEN = config.SPACE_BETWEEN_PIPES;
         float HEIGHT_BOTTOM = (map.top - map.bottom) * 0.5 - SPACE_BETWEEN * 0.5 + map.bottom;
 
         const float PIPE_WIDTH = 10.0f;
         const float PIPE_LENGTH = 10.0f;
 
 
-        int RANGE_HEIGHT = config.maxHeight - config.minHeight + 1;
-        int RANDOM_HEIGHT = rand() %  RANGE_HEIGHT + config.minHeight;
+        int RANGE_HEIGHT = config.MAX_PIPE_HEIGHT - config.MIN_PIPE_HEIGHT + 1;
+        int RANDOM_HEIGHT = rand() %  RANGE_HEIGHT + config.MIN_PIPE_HEIGHT;
 
         HEIGHT_BOTTOM = (float) RANDOM_HEIGHT;
         

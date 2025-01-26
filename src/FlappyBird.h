@@ -20,7 +20,9 @@ struct Map
 
 struct GameConfiguration
 {
-    int spaceBetween, minHeight, maxHeight;
+    int SPACE_BETWEEN_PIPES;
+    int MIN_PIPE_HEIGHT;
+    int MAX_PIPE_HEIGHT;
 };
 
 struct Pipe
