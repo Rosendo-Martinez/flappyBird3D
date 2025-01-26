@@ -88,6 +88,8 @@ int main()
 
     PipeList pipeList(MAP, config);
 
+    glEnable(GL_DEPTH_TEST);
+    
     // main loop
     while (!glfwWindowShouldClose(window))
     {
@@ -98,7 +100,7 @@ int main()
         std::string title = "Flappy Bird 3D | " + std::to_string((int) std::round(dt * 1000));
         glfwSetWindowTitle(window, title.c_str());
 
-        if (pipeList.isBirdDead(bird)) // reset
+        if (pipeList.isBirdDead(bird) || bird.position.y < MAP.bottom || bird.position.y > MAP.top) // reset
         {
             pipeList = PipeList(MAP, config);
             bird.position = glm::vec3(0.0, 25.0f, 0.0f);
@@ -131,36 +133,25 @@ int main()
 
         // grass
         model = squareRender.getModelMatrix(glm::vec3(0.0f), glm::vec3(100.0f, 50.0f, 0.0f), 0.0f, -90.0f);
-        glEnable(GL_DEPTH_TEST);
         squareRender.draw(glm::vec3(0.05f, 0.5f, 0.05f), model);
 
         // blue sky bg
         model = squareRender.getModelMatrix(glm::vec3(0.0f, 25.0f, -25.0f), glm::vec3(100.0f, 50.0f, 0.0f), 0.0f, 0.0f);
-        glEnable(GL_DEPTH_TEST);
         squareRender.draw(glm::vec3(0.05, 0.05, 0.5), model);
 
         // ceiling
         model = squareRender.getModelMatrix(glm::vec3(0.0f, 50.0f, 0.0f), glm::vec3(100.0f, 50.0f, 0.0f), 0.0f, -90.0f);
-        glEnable(GL_DEPTH_TEST);
         squareRender.draw(glm::vec3(0.75f, 0.75f, 0.75f), model);
 
         // burb (bird)
         model = cubeRender.getModelMatrix(bird.position, bird.size);
-        glEnable(GL_DEPTH_TEST);
         cubeRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), model);
-        glDisable(GL_DEPTH_TEST);
-        lineRender.drawAxes(model);
 
         for (auto& pipe : pipeList.pipes)
         {
             model = cubeRender.getModelMatrix(pipe.position, pipe.size);
-            glEnable(GL_DEPTH_TEST);
             cubeRender.draw(glm::vec3(0.9, 0.0, 0.0), model);
         }
-
-
-        glDisable(GL_DEPTH_TEST);
-        lineRender.drawAxes(glm::mat4(10.0f));
  
         glfwSwapBuffers(window);
         glfwPollEvents();

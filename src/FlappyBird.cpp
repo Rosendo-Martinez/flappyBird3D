@@ -11,13 +11,13 @@ FlappyBird::FlappyBird()
 
 void FlappyBird::move(float dt, bool flap)
 {
-    const float FLAP_SPEED = 6.0f;
-    const float GRAVITY = 3.0f;
+    const float FLAP_SPEED = 12.0f;
+    const float GRAVITY = 6.0f;
 
     if (flap)
     {
-        this->position += FLAP_SPEED * dt * glm::vec3(0.0, 1.0, 0.0);
-        this->velocity *= 0;
+        this->position += this->velocity * dt * glm::vec3(0.0, 1.0, 0.0);
+        this->velocity += FLAP_SPEED * dt * glm::vec3(0.0,1.0,0.0);
     }
     else
     {
