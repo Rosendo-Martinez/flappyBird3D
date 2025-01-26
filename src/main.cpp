@@ -119,21 +119,16 @@ int main()
         glm::mat4 model = glm::mat4(1.0f);
 
         // ZA WARUDO (world axes)
-        lineRender.drawAxes(model);
 
         // grass
         model = squareRender.getModelMatrix(glm::vec3(0.0f), glm::vec3(100.0f, 50.0f, 0.0f), 0.0f, -90.0f);
         glEnable(GL_DEPTH_TEST);
         squareRender.draw(glm::vec3(0.05f, 0.5f, 0.05f), model);
-        glDisable(GL_DEPTH_TEST);
-        lineRender.drawAxes(model);
 
         // blue sky bg
         model = squareRender.getModelMatrix(glm::vec3(0.0f, 25.0f, -25.0f), glm::vec3(100.0f, 50.0f, 0.0f), 0.0f, 0.0f);
         glEnable(GL_DEPTH_TEST);
         squareRender.draw(glm::vec3(0.05, 0.05, 0.5), model);
-        glDisable(GL_DEPTH_TEST);
-        lineRender.drawAxes(model);
 
         // ceiling
         model = squareRender.getModelMatrix(glm::vec3(0.0f, 50.0f, 0.0f), glm::vec3(100.0f, 50.0f, 0.0f), 0.0f, -90.0f);
@@ -152,9 +147,10 @@ int main()
             model = cubeRender.getModelMatrix(pipe.position, pipe.size);
             glEnable(GL_DEPTH_TEST);
             cubeRender.draw(glm::vec3(0.9, 0.0, 0.0), model);
-            glDisable(GL_DEPTH_TEST);
-            lineRender.drawAxes(model);
         }
+
+        glDisable(GL_DEPTH_TEST);
+        lineRender.drawAxes(glm::mat4(10.0f));
  
         glfwSwapBuffers(window);
         glfwPollEvents();
