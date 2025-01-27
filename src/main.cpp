@@ -107,9 +107,12 @@ int main()
 
         if (pipeList.isBirdDead(bird) || bird.position.y < MAP.bottom || bird.position.y > MAP.top) // reset
         {
+            float zCenter = (MAP.top - MAP.bottom) / 2.0f;
+            float BIRD_X_SPEED = 5.0f;
+
             pipeList = PipeList(MAP, config);
-            bird.position = glm::vec3(0.0, 25.0f, 0.0f);
-            bird.velocity = glm::vec3(0.0, 5.0f, 0.0f);
+            bird.position = glm::vec3(0.0, zCenter, 0.0f);
+            bird.velocity = glm::vec3(0.0, BIRD_X_SPEED, 0.0f);
             bird.size = glm::vec3(4.0f);
         }
 
