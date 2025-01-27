@@ -93,6 +93,12 @@ int main()
 
     PipeList pipeList(MAP, config);
 
+    // parallax
+    glm::vec3 cloudPOS = glm::vec3(MAP.right, 35.0f, -24.0f);
+    glm::vec3 cloudVEL = glm::vec3(-config.PIPE_SPEED/10.0f, 0.0f, 0.0f);
+    glm::vec3 cloudSIZE = glm::vec3(10.0f,6.0f,0.0f);
+    glm::vec3 cloudCOLOR = glm::vec3(0.75f);
+
     glEnable(GL_DEPTH_TEST);
     
     // main loop
@@ -101,6 +107,13 @@ int main()
         float currentFrame = glfwGetTime();
         dt = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+        cloudPOS += cloudVEL * dt;
+
+        if (cloudPOS.x <= MAP.left)
+        {
+            cloudPOS.x = MAP.right;
+        }
 
         std::string title = "Flappy Bird 3D | " + std::to_string((int) std::round(dt * 1000)) + " ms";
         glfwSetWindowTitle(window, title.c_str());
@@ -114,6 +127,7 @@ int main()
             bird.position = glm::vec3(0.0, zCenter, 0.0f);
             bird.velocity = glm::vec3(0.0, BIRD_X_SPEED, 0.0f);
             bird.size = glm::vec3(4.0f);
+            cloudPOS.x = MAP.right;
         }
 
         processInput(window);
@@ -146,6 +160,27 @@ int main()
         // blue sky bg
         model = squareRender.getModelMatrix(glm::vec3(0.0f, 25.0f, -25.0f), glm::vec3(300.0f, 50.0f, 0.0f), 0.0f, 0.0f);
         squareRender.draw(glm::vec3(0.05, 0.05, 0.5), model);
+
+        model = squareRender.getModelMatrix(cloudPOS,cloudSIZE, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR, model);
+
+        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(-40.0f, -8.0f, 0.0f), cloudSIZE * 1.20f, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR + 0.1f, model);
+
+        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(85.0f, -12.0f, 0.0f), cloudSIZE * 1.60f, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR - 0.25f, model);
+
+        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(-80.0f, 6.0f, 0.0f), cloudSIZE * .80f, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR - 0.1f, model);
+
+        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(57.0f, 9.0f, 0.0f), cloudSIZE, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR + 0.2f, model);
+
+        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(-100.0f, -13.0f, 0.0f), cloudSIZE * 0.5f, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR + 0.08f, model);
+
+        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(-125.0f, 4.0f, 0.0f), cloudSIZE * 0.6f, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR + 0.15f, model);
 
         // ceiling
         model = squareRender.getModelMatrix(glm::vec3(0.0f, 50.0f, 0.0f), glm::vec3(300.0f, 50.0f, 0.0f), 0.0f, -90.0f);
