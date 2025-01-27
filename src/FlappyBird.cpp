@@ -56,21 +56,22 @@ void PipeList::update(float dt)
 
         if (rand() % 101 / 100.f <= config.PROBABILITY_OF_TALL_PIPE) // 1 tall pipe
         {
-            const float isTopPipe = rand() % 101 / 100.f <= 0.5f;
+            // const float isTopPipe = rand() % 101 / 100.f <= 0.5f;
 
             Pipe tall;
             tall.size = glm::vec3(config.PIPE_SIZE_X, (map.top - map.bottom - config.SPACE_BETWEEN_PIPES), config.PIPE_SIZE_Z);
             tall.velocity = glm::vec3(-config.PIPE_SPEED, 0.0f, 0.0f);
 
-            if (isTopPipe)
+            if (isNextTallPipeTop) // top
             {
                 tall.position = glm::vec3(map.right, map.top - (tall.size.y/2.0f) , 0.0f);
             }
-            else
+            else // bottom
             {
                 tall.position = glm::vec3(map.right, map.bottom + (tall.size.y/2.0f), 0.0f);
             }
 
+            isNextTallPipeTop = !isNextTallPipeTop;
             pipes.push_back(tall);
         }
         else // 2 regular pipes

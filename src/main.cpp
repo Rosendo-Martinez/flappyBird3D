@@ -77,8 +77,8 @@ int main()
     bird.velocity = glm::vec3(0.0, 5.0f, 0.0f);
     bird.size = glm::vec3(4.0f);
 
-    MAP.left = -50;
-    MAP.right = 50;
+    MAP.left = -100;
+    MAP.right = 100;
     MAP.top = 50;
     MAP.bottom = 0;
 

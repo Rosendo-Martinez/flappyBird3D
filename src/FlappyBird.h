@@ -47,6 +47,7 @@ public:
     Map map;
     GameConfiguration config;
     float lastPipesTime = 0.0f;
+    bool isNextTallPipeTop = true;
 
     PipeList(Map map, GameConfiguration config);
 
