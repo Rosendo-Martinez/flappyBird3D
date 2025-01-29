@@ -32,6 +32,10 @@ bool flap = false;
 Map MAP;
 GameConfiguration config;
 
+bool isPaused = false;
+float lastPauseTime = 0.0f;
+const float PAUSE_TIMEOUT_INTERVAL = 0.20f; // seconds
+
 void processInput(GLFWwindow* window);
 
 int main()
@@ -131,8 +135,12 @@ int main()
         }
 
         processInput(window);
-        bird.move(dt, flap);
-        pipeList.update(dt);
+
+        if (!isPaused)
+        {
+            bird.move(dt, flap);
+            pipeList.update(dt);
+        }
         cam.setFacingDir(pitch, yaw);
 
         glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -277,5 +285,14 @@ void processInput(GLFWwindow* window)
     else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
     {
         flap = false;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+    {
+        if (lastPauseTime + PAUSE_TIMEOUT_INTERVAL <= lastFrame)
+        {
+            isPaused = !isPaused;
+            lastPauseTime = lastFrame;
+        }
     }
 }
