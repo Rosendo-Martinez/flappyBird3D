@@ -2,67 +2,48 @@
 
 CubeRender::CubeRender(Shader shader)
 {
-    const float vertices[] = 
-    {
-        // Front face
-        // A, C, B
-        -0.5f,  0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-        0.5f,  0.5f,  0.5f,
-        // D, B, C
-        0.5f, -0.5f,  0.5f,
-        0.5f,  0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
+    float vertices[] = {
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-        // Back face
-        // E, F, G
-        -0.5f,  0.5f, -0.5f,
-        0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        // H, G, F
-        0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        0.5f,  0.5f, -0.5f,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 
-        // Top face
-        // E, A, F
-        -0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f,  0.5f,
-        0.5f,  0.5f, -0.5f,
-        // B, F, A
-        0.5f,  0.5f,  0.5f,
-        0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-        // Left face
-        // A, E, C
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        // G, C, E
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f,
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-        // Right face
-        // B, D, F
-        0.5f,  0.5f,  0.5f,
-        0.5f, -0.5f,  0.5f,
-        0.5f,  0.5f, -0.5f,
-        // H, F, D
-        0.5f, -0.5f, -0.5f,
-        0.5f,  0.5f, -0.5f,
-        0.5f, -0.5f,  0.5f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-        // Bottom face
-        // G, H, C
-        -0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        // D, C, H
-        0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-        0.5f, -0.5f, -0.5f
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
     };
 
     unsigned int VBO, VAO;
@@ -73,8 +54,10 @@ CubeRender::CubeRender(Shader shader)
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) 0);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *) (3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 
     this->VAO = VAO;
     this->shader = shader;
