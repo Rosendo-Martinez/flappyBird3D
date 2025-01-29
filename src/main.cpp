@@ -72,7 +72,7 @@ int main()
     // Cube rendering init
     CubeRender cubeRender(squareShader);
 
-    cam.position = glm::vec3(0.0f, 25.0f, 35.f);
+    cam.position = glm::vec3(0.0f, 25.0f, 40.f);
     bird.position = glm::vec3(0.0, 25.0f, 0.0f);
     bird.velocity = glm::vec3(0.0, 5.0f, 0.0f);
     bird.size = glm::vec3(4.0f);
@@ -85,11 +85,11 @@ int main()
     config.SPACE_BETWEEN_PIPES = 10;
     config.MIN_PIPE_HEIGHT = 10;
     config.MAX_PIPE_HEIGHT = 30;
-    config.PIPE_GENERATION_RATE = 4.0f;
+    config.PIPE_GENERATION_RATE = 3.0f;
     config.PROBABILITY_OF_TALL_PIPE = 0.25f;
     config.PIPE_SIZE_X = 12.0f;
     config.PIPE_SIZE_Z = 8.0f;
-    config.PIPE_SPEED = (MAP.right - MAP.left) / 6.5f;
+    config.PIPE_SPEED = (MAP.right - MAP.left) / 5.5f;
 
     PipeList pipeList(MAP, config);
 
@@ -188,7 +188,7 @@ int main()
 
         // burb (bird)
         model = cubeRender.getModelMatrix(bird.position, bird.size);
-        cubeRender.draw(glm::vec3(1.0f, 1.0f, 1.0f), model);
+        cubeRender.draw(glm::vec3(0.988f, 0.875f, 0.204f), model);
 
         for (auto& pipe : pipeList.pipes)
         {
