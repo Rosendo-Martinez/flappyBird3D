@@ -10,6 +10,7 @@
 #include "FlappyBird.h"
 #include "LineRender.h"
 #include "CubeRender.h"
+#include "ParticleSystem.h"
 
 #include <glm/mat4x4.hpp> 
 #include <glm/ext/matrix_clip_space.hpp> 
@@ -31,6 +32,8 @@ bool flap = false;
 
 Map MAP;
 GameConfiguration config;
+
+ParticleSystem particleSystem;
 
 bool isPaused = false;
 float lastPauseTime = 0.0f;
@@ -132,6 +135,8 @@ int main()
             bird.velocity = glm::vec3(0.0, BIRD_X_SPEED, 0.0f);
             bird.size = glm::vec3(4.0f);
             cloudPOS.x = MAP.right;
+
+            particleSystem.particles.clear();
         }
 
         processInput(window);
@@ -139,8 +144,10 @@ int main()
         if (!isPaused)
         {
             bird.move(dt, flap);
-            pipeList.update(dt);
+            // pipeList.update(dt);
+            particleSystem.createParticle(bird.position, glm::vec3(-0.5f, bird.velocity.y * 0.01, 0.0));
         }
+        particleSystem.update(dt);
         cam.setFacingDir(pitch, yaw);
 
         glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -202,6 +209,12 @@ int main()
         {
             model = cubeRender.getModelMatrix(pipe.position, pipe.size);
             cubeRender.draw(glm::vec3(0.9, 0.0, 0.0), model);
+        }
+
+        for (auto& p : particleSystem.particles)
+        {
+            model = cubeRender.getModelMatrix(p.pos, p.size);
+            cubeRender.draw(glm::vec3(0.0f), model);
         }
  
         glfwSwapBuffers(window);

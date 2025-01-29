@@ -6,8 +6,8 @@ run : ./bin/main.exe
 clean : 
 	rm -f ./bin/*.o ./bin/main.exe
 
-./bin/main.exe : ./src/main.cpp ./bin/Shader.o ./bin/SquareRender.o ./bin/Camera.o ./bin/FlappyBird.o ./bin/LineRender.o ./bin/CubeRender.o
-	g++ ./src/main.cpp ./dep/glad/src/glad.c ./bin/Shader.o ./bin/SquareRender.o ./bin/Camera.o ./bin/FlappyBird.o ./bin/LineRender.o ./bin/CubeRender.o -o ./bin/main.exe -I./dep/glad/include -lglfw -ldl
+./bin/main.exe : ./src/main.cpp ./bin/Shader.o ./bin/SquareRender.o ./bin/Camera.o ./bin/FlappyBird.o ./bin/LineRender.o ./bin/CubeRender.o ./bin/ParticleSystem.o
+	g++ ./src/main.cpp ./dep/glad/src/glad.c ./bin/Shader.o ./bin/SquareRender.o ./bin/Camera.o ./bin/FlappyBird.o ./bin/LineRender.o ./bin/CubeRender.o ./bin/ParticleSystem.o -o ./bin/main.exe -I./dep/glad/include -lglfw -ldl
 
 ./bin/Shader.o : ./src/Shader.cpp ./src/Shader.h
 	g++ -c ./src/Shader.cpp -o ./bin/Shader.o -I./dep/glad/include
@@ -26,3 +26,6 @@ clean :
 
 ./bin/CubeRender.o : ./src/CubeRender.cpp ./src/CubeRender.h
 	g++ -c ./src/CubeRender.cpp -o ./bin/CubeRender.o -I./dep/glad/include
+
+./bin/ParticleSystem.o : ./src/ParticleSystem.cpp ./src/ParticleSystem.h
+	g++ -c ./src/ParticleSystem.cpp -o ./bin/ParticleSystem.o 
