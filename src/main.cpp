@@ -213,6 +213,11 @@ int main()
 
         for (auto& p : particleSystem.particles)
         {
+            // if (p.life <= 0)
+            // {
+            //     continue;
+            // }
+
             model = cubeRender.getModelMatrix(p.pos, p.size);
             cubeRender.draw(glm::vec3(0.0f), model);
         }
