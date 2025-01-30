@@ -63,15 +63,16 @@ CubeRender::CubeRender(Shader shader)
     this->shader = shader;
 }
 
-void CubeRender::draw(glm::vec3 color, glm::mat4 model)
+void CubeRender::draw(glm::vec4 color, glm::mat4 model)
 {
     this->shader.use();
 
     // set model matrix
     glUniformMatrix4fv(glGetUniformLocation(this->shader.ID, "model"), 1, GL_FALSE, glm::value_ptr(model));    
 
+
     // set color
-    glUniform3fv(glGetUniformLocation(this->shader.ID, "color"), 1, &color[0]);
+    glUniform4fv(glGetUniformLocation(this->shader.ID, "color"), 1, &color[0]);
 
     // Draw cube
     glBindVertexArray(this->VAO);

@@ -38,8 +38,10 @@ void SquareRender::draw(glm::vec3 color, glm::mat4 model)
     // set model matrix
     glUniformMatrix4fv(glGetUniformLocation(this->shader.ID, "model"), 1, GL_FALSE, glm::value_ptr(model));    
 
+    glm::vec4 colorWithAlpha = glm::vec4(color, 1.0f);
+
     // set color
-    glUniform3fv(glGetUniformLocation(this->shader.ID, "color"), 1, &color[0]);
+    glUniform4fv(glGetUniformLocation(this->shader.ID, "color"), 1, &colorWithAlpha[0]);
 
     // Draw square
     glBindVertexArray(this->VAO);

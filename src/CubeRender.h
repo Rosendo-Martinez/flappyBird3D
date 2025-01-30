@@ -16,6 +16,6 @@ private:
 public:
     CubeRender(Shader shader);
 
-    void draw(glm::vec3 color, glm::mat4 model);
+    void draw(glm::vec4 color, glm::mat4 model);
     glm::mat4 getModelMatrix(glm::vec3 pos, glm::vec3 size);
 };

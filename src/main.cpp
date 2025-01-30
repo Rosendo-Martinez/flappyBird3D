@@ -20,7 +20,7 @@ const unsigned int SCREEN_WIDTH = 1600;
 const unsigned int SCREEN_HEIGHT = 900;
 
 Camera cam;
-float yaw = -90.0f;
+float yaw = -85.0f;
 float pitch = 0.0f;
 float fov = 90.0f;
 
@@ -107,6 +107,8 @@ int main()
     glm::vec3 cloudCOLOR = glm::vec3(0.75f);
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  
     
     // main loop
     while (!glfwWindowShouldClose(window))
@@ -144,7 +146,7 @@ int main()
         if (!isPaused)
         {
             bird.move(dt, flap);
-            // pipeList.update(dt);
+            pipeList.update(dt);
             particleSystem.createParticle(bird.position, glm::vec3(-0.5f, bird.velocity.y * 0.01, 0.0));
         }
         particleSystem.update(dt);
@@ -203,12 +205,12 @@ int main()
 
         // burb (bird)
         model = cubeRender.getModelMatrix(bird.position, bird.size);
-        cubeRender.draw(glm::vec3(0.988f, 0.875f, 0.204f), model);
+        cubeRender.draw(glm::vec4(0.988f, 0.875f, 0.204f, 1.0f), model);
 
         for (auto& pipe : pipeList.pipes)
         {
             model = cubeRender.getModelMatrix(pipe.position, pipe.size);
-            cubeRender.draw(glm::vec3(0.9, 0.0, 0.0), model);
+            cubeRender.draw(glm::vec4(0.9, 0.0, 0.0, 1.0f), model);
         }
 
         for (auto& p : particleSystem.particles)
@@ -219,7 +221,7 @@ int main()
             // }
 
             model = cubeRender.getModelMatrix(p.pos, p.size);
-            cubeRender.draw(glm::vec3(0.5f), model);
+            cubeRender.draw(glm::vec4(1.0f, 1.0f, 1.0f, 0.5f), model);
         }
  
         glfwSwapBuffers(window);
