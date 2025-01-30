@@ -113,8 +113,7 @@ int main()
         dt = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        std::string title = "Flappy Bird 3D | " + std::to_string((int) std::round(dt * 1000)) + " ms";
-        glfwSetWindowTitle(window, title.c_str());
+        std::cout << "SPF: " << dt << "\n";
         
         processInput(window);
 
