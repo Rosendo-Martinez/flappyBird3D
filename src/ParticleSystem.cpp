@@ -22,6 +22,8 @@ void ParticleSystem::createParticle(glm::vec3 pos, glm::vec3 vel)
     p.pos = pos;
     p.vel = vel;
 
+    p.pos += glm::vec3(0.0f, randomFloat(-1.5, 1.5), randomFloat(-1.5, 1.5));
+
     const float PARTICLE_LIFETIME_SEC = 1.0;
     p.life = PARTICLE_LIFETIME_SEC;
 
