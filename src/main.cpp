@@ -16,6 +16,9 @@
 #include <glm/ext/matrix_clip_space.hpp> 
 #include <glm/gtc/type_ptr.hpp>
 
+float frameRates[60] = {};
+int nextFrameRateIndex = 0;
+
 const unsigned int SCREEN_WIDTH = 1600;
 const unsigned int SCREEN_HEIGHT = 900;
 
@@ -113,7 +116,24 @@ int main()
         dt = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        std::cout << "SPF: " << dt << "\n";
+        // Frame rate logger
+        if (nextFrameRateIndex == 60)
+        {
+            nextFrameRateIndex = 0;
+            float avg = 0.0f;
+            for (int i = 0; i < 60; i++)
+            {
+                avg += frameRates[i];
+            }
+
+            avg = avg/60.f;
+            std::cout << "AVG of Last 60 SPF: " << avg << '\n';
+        }   
+        else
+        {
+            frameRates[nextFrameRateIndex] = dt;
+            nextFrameRateIndex++;
+        }
         
         processInput(window);
 
