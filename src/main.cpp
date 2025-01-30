@@ -219,7 +219,7 @@ int main()
             // }
 
             model = cubeRender.getModelMatrix(p.pos, p.size);
-            cubeRender.draw(glm::vec3(0.0f), model);
+            cubeRender.draw(glm::vec3(0.5f), model);
         }
  
         glfwSwapBuffers(window);
