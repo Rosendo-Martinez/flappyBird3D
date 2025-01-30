@@ -71,15 +71,11 @@ int main()
     squareShader.compile("./shaders/square.vs", "./shaders/square.fs");
     SquareRender squareRender(squareShader);
 
-    // Line rendering init
-    Shader lineShader;
-    lineShader.compile("./shaders/line.vs", "./shaders/line.fs");
-    LineRender lineRender(lineShader);
-
     // Cube rendering init
-    CubeRender cubeRender(squareShader);
+    CubeRender cubeRender(squareShader); // same shaders as square
 
     cam.position = glm::vec3(0.0f, 25.0f, 40.f);
+
     bird.position = glm::vec3(0.0, 25.0f, 0.0f);
     bird.velocity = glm::vec3(0.0, 5.0f, 0.0f);
     bird.size = glm::vec3(4.0f);
@@ -100,7 +96,7 @@ int main()
 
     PipeList pipeList(MAP, config);
 
-    // parallax
+    // Cloud (for parallax effect)
     glm::vec3 cloudPOS = glm::vec3(MAP.right, 35.0f, -24.0f);
     glm::vec3 cloudVEL = glm::vec3(-config.PIPE_SPEED/10.0f, 0.0f, 0.0f);
     glm::vec3 cloudSIZE = glm::vec3(10.0f,6.0f,0.0f);
@@ -117,17 +113,20 @@ int main()
         dt = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        cloudPOS += cloudVEL * dt;
+        std::string title = "Flappy Bird 3D | " + std::to_string((int) std::round(dt * 1000)) + " ms";
+        glfwSetWindowTitle(window, title.c_str());
+        
+        processInput(window);
 
+        // Cloud logic
+        cloudPOS += cloudVEL * dt;
         if (cloudPOS.x <= MAP.left)
         {
             cloudPOS.x = MAP.right;
         }
 
-        std::string title = "Flappy Bird 3D | " + std::to_string((int) std::round(dt * 1000)) + " ms";
-        glfwSetWindowTitle(window, title.c_str());
-
-        if (pipeList.isBirdDead(bird) || bird.position.y < MAP.bottom || bird.position.y > MAP.top) // reset
+        // Player died / reset game
+        if (pipeList.isBirdDead(bird) || bird.position.y < MAP.bottom || bird.position.y > MAP.top)
         {
             float zCenter = (MAP.top - MAP.bottom) / 2.0f;
             float BIRD_X_SPEED = 5.0f;
@@ -137,12 +136,10 @@ int main()
             bird.velocity = glm::vec3(0.0, BIRD_X_SPEED, 0.0f);
             bird.size = glm::vec3(4.0f);
             cloudPOS.x = MAP.right;
-
             particleSystem.particles.clear();
         }
 
-        processInput(window);
-
+        // Paused game
         if (!isPaused)
         {
             bird.move(dt, flap);
@@ -152,6 +149,8 @@ int main()
         particleSystem.update(dt);
         cam.setFacingDir(pitch, yaw);
 
+        // Render
+
         glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -159,9 +158,6 @@ int main()
         glm::mat4 view = cam.getViewMatrix();
 
         // set projection and view matrix
-        lineShader.use();
-        glUniformMatrix4fv(glGetUniformLocation(lineShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-        glUniformMatrix4fv(glGetUniformLocation(lineShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
         squareShader.use();
         glUniformMatrix4fv(glGetUniformLocation(squareShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(squareShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
