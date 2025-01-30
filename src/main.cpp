@@ -221,7 +221,8 @@ int main()
             // }
 
             model = cubeRender.getModelMatrix(p.pos, p.size);
-            cubeRender.draw(glm::vec4(1.0f, 1.0f, 1.0f, 0.5f), model);
+            // cubeRender.draw(glm::vec4(p.color, 0.5f), model);
+            cubeRender.draw(p.color, model);
         }
  
         glfwSwapBuffers(window);

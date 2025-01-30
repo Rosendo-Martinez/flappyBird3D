@@ -4,7 +4,7 @@
 
 
 float randomFloat(float min, float max) {
-    // Copy and pasted from chatgpt.
+    // Copied and pasted from chatgpt.
 
     static std::random_device rd;  // Seed source
     static std::mt19937 gen(rd()); // Mersenne Twister PRNG
@@ -18,30 +18,24 @@ ParticleSystem::ParticleSystem()
 
 void ParticleSystem::createParticle(glm::vec3 pos, glm::vec3 vel)
 {
+    const float PARTICLE_LIFETIME_SEC = 1.0;
+
     Particle p;
     p.pos = pos;
     p.vel = vel;
-
-    p.pos += glm::vec3(0.0f, randomFloat(-1.5, 1.5), randomFloat(-1.5, 1.5));
-
-    const float PARTICLE_LIFETIME_SEC = 1.0;
     p.life = PARTICLE_LIFETIME_SEC;
 
+    // random position offset
+    p.pos += glm::vec3(0.0f, randomFloat(-1.5, 1.5), randomFloat(-1.5, 1.5));
+
+    // random velocity offset
     p.vel.x += randomFloat(-0.1, 0);
     p.vel.y += randomFloat(-0.1, 0.1);
     p.vel.z += randomFloat(-0.1, 0.1);
 
-    particles.push_back(p);
+    p.color = glm::vec4(glm::vec3(randomFloat(0.7f, 1.0f)), randomFloat(0.2f, 0.6f));
 
-    /**
-     * I want random x,y,z, but y will mostly be equal to p.y (just slighlty off)
-     * 
-     * Z_RANGE = [0.5, -0.5]
-     * Y_RANGE = pos.y + [0.5, -0.5]
-     * X_RANGE = [0.5,-0.5]
-     * 
-     * random() % RANGE + MIN
-     */
+    particles.push_back(p);
 }
 
 void ParticleSystem::update(float dt)
@@ -51,6 +45,7 @@ void ParticleSystem::update(float dt)
     // remove dead particles
     particles.erase(std::remove_if(particles.begin(), particles.end(), [](Particle& p) { return p.life <= 0; }), particles.end());
 
+    // update particles
     for (auto& p : particles)
     {
         p.pos += p.vel;
@@ -58,13 +53,3 @@ void ParticleSystem::update(float dt)
         p.life -= dt;
     }
 }
-
-/**
- * How to remove particles?
- * How to add new particles?
- * 
- * generate like 2 particles every 0.05 seconds?
- * 
- * Give particals a life time. Have a set number or not of particals. 
- * Like 100 max particles.
- */
