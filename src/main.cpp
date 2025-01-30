@@ -168,60 +168,49 @@ int main()
 
         glm::mat4 model = glm::mat4(1.0f);
 
-        // ZA WARUDO (world axes)
-
-        // grass
+        // Grass (ground)
         model = squareRender.getModelMatrix(glm::vec3(0.0f), glm::vec3(300.0f, 50.0f, 0.0f), 0.0f, -90.0f);
         squareRender.draw(glm::vec3(0.05f, 0.5f, 0.05f), model);
 
-        // blue sky bg
+        // Sky (back wall)
         model = squareRender.getModelMatrix(glm::vec3(0.0f, 25.0f, -25.0f), glm::vec3(300.0f, 50.0f, 0.0f), 0.0f, 0.0f);
         squareRender.draw(glm::vec3(0.05, 0.05, 0.5), model);
 
-        model = squareRender.getModelMatrix(cloudPOS,cloudSIZE, 0.0f, 0.0f);
-        squareRender.draw(cloudCOLOR, model);
-
-        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(-40.0f, -8.0f, 0.0f), cloudSIZE * 1.20f, 0.0f, 0.0f);
-        squareRender.draw(cloudCOLOR + 0.1f, model);
-
-        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(85.0f, -12.0f, 0.0f), cloudSIZE * 1.60f, 0.0f, 0.0f);
-        squareRender.draw(cloudCOLOR - 0.25f, model);
-
-        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(-80.0f, 6.0f, 0.0f), cloudSIZE * .80f, 0.0f, 0.0f);
-        squareRender.draw(cloudCOLOR - 0.1f, model);
-
-        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(57.0f, 9.0f, 0.0f), cloudSIZE, 0.0f, 0.0f);
-        squareRender.draw(cloudCOLOR + 0.2f, model);
-
-        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(-100.0f, -13.0f, 0.0f), cloudSIZE * 0.5f, 0.0f, 0.0f);
-        squareRender.draw(cloudCOLOR + 0.08f, model);
-
-        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(-125.0f, 4.0f, 0.0f), cloudSIZE * 0.6f, 0.0f, 0.0f);
-        squareRender.draw(cloudCOLOR + 0.15f, model);
-
-        // ceiling
+        // Ceiling
         model = squareRender.getModelMatrix(glm::vec3(0.0f, 50.0f, 0.0f), glm::vec3(300.0f, 50.0f, 0.0f), 0.0f, -90.0f);
         squareRender.draw(glm::vec3(0.75f, 0.75f, 0.75f), model);
 
-        // burb (bird)
+        // Clouds (for parallax effect)
+        model = squareRender.getModelMatrix(cloudPOS,cloudSIZE, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR, model);
+        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(-40.0f, -8.0f, 0.0f), cloudSIZE * 1.20f, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR + 0.1f, model);
+        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(85.0f, -12.0f, 0.0f), cloudSIZE * 1.60f, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR - 0.25f, model);
+        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(-80.0f, 6.0f, 0.0f), cloudSIZE * .80f, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR - 0.1f, model);
+        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(57.0f, 9.0f, 0.0f), cloudSIZE, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR + 0.2f, model);
+        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(-100.0f, -13.0f, 0.0f), cloudSIZE * 0.5f, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR + 0.08f, model);
+        model = squareRender.getModelMatrix(cloudPOS + glm::vec3(-125.0f, 4.0f, 0.0f), cloudSIZE * 0.6f, 0.0f, 0.0f);
+        squareRender.draw(cloudCOLOR + 0.15f, model);
+
+        // Bird
         model = cubeRender.getModelMatrix(bird.position, bird.size);
         cubeRender.draw(glm::vec4(0.988f, 0.875f, 0.204f, 1.0f), model);
 
+        // Pipes
         for (auto& pipe : pipeList.pipes)
         {
             model = cubeRender.getModelMatrix(pipe.position, pipe.size);
             cubeRender.draw(glm::vec4(0.9, 0.0, 0.0, 1.0f), model);
         }
 
+        // Particles
         for (auto& p : particleSystem.particles)
         {
-            // if (p.life <= 0)
-            // {
-            //     continue;
-            // }
-
             model = cubeRender.getModelMatrix(p.pos, p.size);
-            // cubeRender.draw(glm::vec4(p.color, 0.5f), model);
             cubeRender.draw(p.color, model);
         }
  

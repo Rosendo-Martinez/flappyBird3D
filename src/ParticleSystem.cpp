@@ -33,6 +33,7 @@ void ParticleSystem::createParticle(glm::vec3 pos, glm::vec3 vel)
     p.vel.y += randomFloat(-0.1, 0.1);
     p.vel.z += randomFloat(-0.1, 0.1);
 
+    // random grey scale color, and random opacity
     p.color = glm::vec4(glm::vec3(randomFloat(0.7f, 1.0f)), randomFloat(0.2f, 0.6f));
 
     particles.push_back(p);
