@@ -135,6 +135,13 @@ int main()
             nextFrameRateIndex++;
         }
         
+        // Prevent too large time steps
+        // Large time steps can cause noticeable jumps in frames
+        if (dt > 0.020f)
+        {
+            dt = 0.020f;
+        }
+
         processInput(window);
 
         // Cloud logic
