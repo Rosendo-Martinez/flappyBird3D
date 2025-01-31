@@ -167,7 +167,7 @@ int main()
             particleSystem.particles.clear();
         }
 
-        const float fixedDT = 0.008f;
+        const float fixedDT = 0.016f;
         accumulator += dt;
         while (accumulator >= fixedDT)
         {
@@ -183,8 +183,6 @@ int main()
         }
         cam.setFacingDir(pitch, yaw);
         particleSystem.createParticle(bird.position, glm::vec3(-20.0f, bird.velocity.y, 0.0));
-
-
 
         // Render
 
