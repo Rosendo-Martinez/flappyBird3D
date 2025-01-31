@@ -41,7 +41,8 @@ void ParticleSystem::createParticle(glm::vec3 pos, glm::vec3 vel)
 
 void ParticleSystem::update(float dt)
 {
-    const float GRAVITY = 5.0f;
+    // particles float up
+    const float GRAVITY = 2.0f;
 
     // remove dead particles
     particles.erase(std::remove_if(particles.begin(), particles.end(), [](Particle& p) { return p.life <= 0; }), particles.end());
@@ -50,7 +51,7 @@ void ParticleSystem::update(float dt)
     for (auto& p : particles)
     {
         p.pos += p.vel * dt;
-        p.vel.y -= GRAVITY * dt;
+        p.vel.y += GRAVITY * dt;
         p.life -= dt;
     }
 }
