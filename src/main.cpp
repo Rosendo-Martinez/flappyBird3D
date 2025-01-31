@@ -42,6 +42,8 @@ bool isPaused = false;
 float lastPauseTime = 0.0f;
 const float PAUSE_TIMEOUT_INTERVAL = 0.20f; // seconds
 
+float accumulator = 0.0f;
+
 void processInput(GLFWwindow* window);
 
 int main()
@@ -165,15 +167,24 @@ int main()
             particleSystem.particles.clear();
         }
 
-        // Paused game
-        if (!isPaused)
+        const float fixedDT = 0.008f;
+        accumulator += dt;
+        while (accumulator >= fixedDT)
         {
-            bird.move(dt, flap);
-            pipeList.update(dt);
-            particleSystem.createParticle(bird.position, glm::vec3(-0.5f, bird.velocity.y * 0.01, 0.0));
+            // Paused game
+            if (!isPaused)
+            {
+                bird.move(fixedDT, flap);
+                pipeList.update(fixedDT);
+            }
+            particleSystem.update(fixedDT);
+
+            accumulator -= fixedDT;
         }
-        particleSystem.update(dt);
         cam.setFacingDir(pitch, yaw);
+        particleSystem.createParticle(bird.position, glm::vec3(-20.0f, bird.velocity.y, 0.0));
+
+
 
         // Render
 
